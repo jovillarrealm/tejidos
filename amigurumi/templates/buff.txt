@@ -1,0 +1,5 @@
+<!-- 
+
+                    <a class="nav-link active" href="{% url 'lpatron' %}">Catálogo</a>
+                    
+                    -->
