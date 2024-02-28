@@ -38,15 +38,20 @@
 
  
 
-            <form method="POST" action="{% url 'form' %}"> 
+            <form method="POST" action="{% url 'cpatron' %}"> 
 
               {% csrf_token %} 
 
-              <input type="text" class="form-control mb-2" placeholder="Enter name" name="name" value="{{form.data.name }}" /> 
+              <input type="text" class="form-control mb-2" placeholder="Ingresar nombre" name="nombre" value="{{form.data.nombre }}" /> 
+              
+              <input type="textarea" class="form-control mb-2" placeholder="Especificar detalles del patron" name="detalles" value="{{form.data.detalles }}" rows = "5" columns="30"/> 
+              
 
-              <input type="text" class="form-control mb-2" placeholder="Enter price" name="price" value="{{form.data.price }}" /> 
-
-              <input type="submit" class="btn btn-primary" value="Send" /> 
+              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar alto (cm)" name="alto" value="{{form.data.alto }}"/> 
+              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar ancho (cm)" name="ancho" value="{{form.data.ancho }}"/> 
+              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar profundidad (cm)" name="profundidad" value="{{form.data.profundidad }}"/> 
+              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar precio (COP)" name="precio" value="{{form.data.precio}}"/> 
+              <input type="submit" class="btn btn-primary" value="Enviar" /> 
 
             </form> 
 
