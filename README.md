@@ -2,7 +2,7 @@
 
 El taller está desarrollado en python 3.12 y Django 5.0 con las siguientes dependencias en un requirements.txt:
 
-```toml
+```yaml
 asgiref==3.7.2
 Django==5.0.2
 sqlparse==0.4.4
