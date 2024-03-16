@@ -1,15 +1,9 @@
 from django.shortcuts import render, redirect
-
-
-
 from django.views import View
 from django.views.generic import TemplateView
-
-from django.http import HttpResponseRedirect
-
+from django.http import HttpRequest
 from abc import ABC, abstractmethod
 from .forms import PatronForm
-
 from .models import PatronModel
 
 # Create your views here.
@@ -30,7 +24,7 @@ class CreatePatronView(View):
 
             return render(request, self.template_name, viewData)
 
-    def post(self, request):
+    def post(self, request: HttpRequest):
         form = PatronForm(request.POST)
 
         if form.is_valid():
@@ -84,12 +78,6 @@ class PatronView(TemplateView):
         
 
         
-
-
-
-
-
-
 
 
 
