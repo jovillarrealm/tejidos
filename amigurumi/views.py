@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from abc import ABC, abstractmethod
 from .forms import PatronForm, DescuentoForm
 from .models import PatronModel
-
+from itertools import batched
 # Create your views here.
 
 
@@ -31,7 +31,7 @@ class CreatePatronView(View):
         if form.is_valid():
             form.save()
 
-            return render(request, ConfirmIngresoView.template_name)
+            return render(request, ConfirmView.template_name)
 
         else:
             viewData = {}
@@ -42,8 +42,8 @@ class CreatePatronView(View):
             return render(request, self.template_name, viewData)
 
 
-class ConfirmIngresoView(View):
-    template_name = "patron/ingreso.html"
+class ConfirmView(View):
+    template_name = "patron/confirm.html"
 
     def post(self, request):
         return render(request, self.template_name, {})
@@ -84,7 +84,7 @@ class PatronView(TemplateView):
                 item.descuento = descuento
                 item.save()
 
-                return render(request, ConfirmIngresoView.template_name)
+                return render(request, ConfirmView.template_name)
 
 
 class Contenedor(ABC):
@@ -102,15 +102,17 @@ class CatalogoView(View):
 
     def get(self, request):
         catalogoData = PatronModel.objects.select_related().all()
+        catalogo = batched(catalogoData, 3)
+
         viewData = {}
-        viewData["catalogo"] = catalogoData
+        viewData["catalogo"] = catalogo
         viewData["title"] = "Catálogo de Amigurumis"
         viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
 
         return render(request, self.template_name, viewData)
 
 
-class UsersView(ListView):
+#class UsersView(ListView):
     """A menos que se especifique un `template_name`, se buscará la plantilla `patronmodel_list.html`
     porque el model es PatronModel.
 
