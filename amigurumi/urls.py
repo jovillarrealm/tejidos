@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import HomeView, CreatePatronView, CatalogoView, PatronView, CatalogoListView
+from .views import HomeView, CreatePatronView, PatronView, CatalogoListView
 
 
 urlpatterns = [

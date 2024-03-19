@@ -51,17 +51,7 @@ class ConfirmIngresoView(View):
         return render(request, self.template_name, {})
 
 
-class CatalogoView(View):
-    template_name = "patron/catalogo.html"
 
-    def get(self, request):
-        catalogoData = PatronModel.objects.select_related().all()
-        viewData = {}
-        viewData["catalogo"] = catalogoData
-        viewData["title"] = "Catálogo de Amigurumis"
-        viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
-
-        return render(request, self.template_name, viewData)
 
 
 class CatalogoListView(ListView):
@@ -75,6 +65,7 @@ class CatalogoListView(ListView):
     """
 
     model = PatronModel
+    template_name = "patron/catalogo.html"
 
 
 class PatronView(TemplateView):
@@ -102,3 +93,15 @@ class Contenedor(ABC):
     @abstractmethod
     def remover(self):
         pass
+
+class CatalogoView(View):
+    template_name = "patron/catalogo.html"
+
+    def get(self, request):
+        catalogoData = PatronModel.objects.select_related().all()
+        viewData = {}
+        viewData["catalogo"] = catalogoData
+        viewData["title"] = "Catálogo de Amigurumis"
+        viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
+
+        return render(request, self.template_name, viewData)
