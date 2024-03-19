@@ -10,10 +10,11 @@
 <section class="py-5">
   <div class="container px-4 px-lg-5 my-5">
       <div class="row gx-4 gx-lg-5 align-items-center">
-          <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
-              src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+          <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+        </svg>
           <div class="col-md-6">
-              <div class="small mb-1">SKU: {{ patron.sku }}</div>
+              <div class="small mb-1">SKU: {{ patron.id }}</div>
               <h1 class="display-5 fw-bolder">Patrón Amigurumi</h1>
               <div class="fs-5 mb-5">
                   {% if descuento %}
