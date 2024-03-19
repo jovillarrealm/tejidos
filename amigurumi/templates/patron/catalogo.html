@@ -10,17 +10,24 @@
 
 <div class="row">
 
-    {% for product in patronmodel_list %}
+    {% for patron in patronmodel_list %}
 
     <div class="col mb-5">
         <div class="card h-100">
             <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" href="{% url 'mostrar' id=product.id %}" alt="..." />
+            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                href="{% url 'mostrar' id=patron.id %}" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
                 <div class="text-center">
+                    {% if patron.descuento %}
+                    <!-- Sale badge-->
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Descuento
+                    </div>
+                    {% endif %}
                     <!-- Product name-->
-                    <h5 class="fw-bolder"><a href="{% url 'mostrar' id=product.id %}" style="color: black;text-decoration: none;" >{{product.nombre}}</a></h5>
+                    <h5 class="fw-bolder"><a href="{% url 'mostrar' id=patron.id %}"
+                            style="color: black;text-decoration: none;">{{patron.nombre}}</a></h5>
                     <!-- Product reviews-->
                     <div class="d-flex justify-content-center small text-warning mb-2">
                         <div class="bi-star-fill"></div>
@@ -30,7 +37,17 @@
                         <div class="bi-star-fill"></div>
                     </div>
                     <!-- Product price-->
-                    $ {{product.precio}}
+                    {% if patron.descuento %}
+                    <a style="color: purple;">{{ patron.descuento }}%</a>
+
+
+                    <span class="text-decoration-line-through"> COP {{ patron.precio }}</span>
+                    <div>
+                        COP {{ patron.precio_descuento }}
+                    </div>
+                    {% else %}
+                    COP {{ patron.precio }}
+                    {% endif %}
                 </div>
             </div>
             <!-- Product actions-->

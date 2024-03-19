@@ -3,7 +3,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView
 from django.http import HttpRequest
 from abc import ABC, abstractmethod
-from .forms import PatronForm
+from .forms import PatronForm, DescuentoForm
 from .models import PatronModel
 
 # Create your views here.
@@ -20,9 +20,7 @@ class CreatePatronView(View):
         form = PatronForm()
 
         viewData = {}
-
         viewData["title"] = "Crear patrón de Amigurumi"
-
         viewData["form"] = form
 
         return render(request, self.template_name, viewData)
@@ -32,13 +30,13 @@ class CreatePatronView(View):
 
         if form.is_valid():
             form.save()
+
             return render(request, ConfirmIngresoView.template_name)
 
         else:
             viewData = {}
 
-            viewData["title"] = "Create product"
-
+            viewData["title"] = "Crear patrón de Amigurumi, pero bien"
             viewData["form"] = form
 
             return render(request, self.template_name, viewData)
@@ -51,38 +49,42 @@ class ConfirmIngresoView(View):
         return render(request, self.template_name, {})
 
 
-
-
-
-class CatalogoListView(ListView):
-    """A menos que se especifique un `template_name`, se buscará la plantilla `patronmodel_list.html`
-    porque el model es PatronModel.
-
-    A menos que se especifique una variable `context_object_name` se podrán usar `object_list` o `patronmodel_list` dentro de la plantilla
-
-    template_name = "model_list.html"
-    context_object_name = "example_name"
-    """
-
+class CatalogoListView(View):
     model = PatronModel
     template_name = "patron/catalogo.html"
 
 
 class PatronView(TemplateView):
-    template_name = "patron/mostrar.html"
+    template_name = "patron/show.html"
 
-    def get(self, request, id):
+    def get(self, request: HttpRequest, id):
+        patron = PatronModel.objects.get(id=id)
         context = {}
-        context["product"] = PatronModel.objects.get(id=id)
+
+        context["patron"] = patron
         context["title"] = f"Amigurumis #{id} "
+        context["DescuentoForm"] = DescuentoForm()
+        context["DeleteForm"] = DescuentoForm()
         context["subtitle"] = "Amigurumi seleccionado"
+
         return render(request, self.template_name, context)
 
-    def post(self, request, id):
-        print(id)
-        PatronModel.objects.filter(id=id).delete()
-        if not PatronModel.objects.filter(id=id).exists():
-            return redirect("/catalogo/")
+    def post(self, request: HttpRequest, id):
+        if "delete" in request.POST:
+            PatronModel.objects.get(id=id).delete()
+
+            if not PatronModel.objects.filter(id=id).exists():
+                return redirect("/catalogo/")
+        elif "descuento" in request.POST:
+            form = DescuentoForm(request.POST)
+
+            if form.is_valid():
+                descuento = form.cleaned_data["descuento"]
+                item = PatronModel.objects.get(id=id)
+                item.descuento = descuento
+                item.save()
+
+                return render(request, ConfirmIngresoView.template_name)
 
 
 class Contenedor(ABC):
@@ -93,6 +95,7 @@ class Contenedor(ABC):
     @abstractmethod
     def remover(self):
         pass
+
 
 class CatalogoView(View):
     template_name = "patron/catalogo.html"
@@ -105,3 +108,14 @@ class CatalogoView(View):
         viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
 
         return render(request, self.template_name, viewData)
+
+
+class UsersView(ListView):
+    """A menos que se especifique un `template_name`, se buscará la plantilla `patronmodel_list.html`
+    porque el model es PatronModel.
+
+    A menos que se especifique una variable `context_object_name` se podrán usar `object_list` o `patronmodel_list` dentro de la plantilla
+
+    template_name = "model_list.html"
+    context_object_name = "example_name"
+    """

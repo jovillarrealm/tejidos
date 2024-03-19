@@ -1,0 +1,63 @@
+{% extends '../base.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block header_title %} {{subtitle}} {% endblock %}
+
+
+
+{% block content %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
+                    src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">SKU: {{ patron.id }}</div>
+                <h1 class="display-5 fw-bolder">{{patron.nombre}}</h1>
+                <div class="fs-5 mb-5">
+                    {% if patron.descuento %}
+                    <a style="color: purple;"  >{{ patron.descuento }}%</a>
+
+
+                    <span class="text-decoration-line-through"> COP {{ patron.precio }}</span>
+                    COP {{ patron.precio_descuento }}
+
+                    {% else %}
+                    COP {{ patron.precio }}
+                    {% endif %}
+                </div>
+                <p class="lead">{{patron.detalles}}</p>
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
+                        style="max-width: 3rem" />
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <i class="bi-cart-fill me-1"></i>
+                        Añadir al carrito
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="POST" action="{% url 'mostrar' id=patron.id %}">
+        {% csrf_token %}
+        <input type="number" step=1 min="1" class="form-control text-center me-3" style="max-width: 6rem" name="descuento" value="{{DescuentoForm.descuento}}"/>
+        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+            <i class="bi-star-fill"></i>
+            Aplicar descuento (%)
+        </button>
+    </form>
+
+    <form method="POST" action="{% url 'mostrar' id=patron.id %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-dark flex-shrink-0" name="delete" type="submit">
+            <i class="bi bi-trash"></i>
+            Eliminar Patrón
+        </button>
+    </form>
+</section>
+<!-- Product section-->
+
+
+{% endblock %}
