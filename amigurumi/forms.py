@@ -60,29 +60,31 @@ class PatronForm(ModelForm):
         return precio
 
     def clean_descuento(self):
-        descuento = "descuento"
-        if descuento in self.cleaned_data:
-            descuento = self.cleaned_data[descuento]
+        descuento_n = "descuento"
+        if descuento_n in self.cleaned_data:
+            descuento: int = self.cleaned_data[descuento_n]
         if not (descuento and 0 <= descuento <= 100 and int(descuento) == descuento):
             raise forms.ValidationError(
                 "El valor debería ser un `int` positivo :(", "invalid"
             )
         else:
             return descuento
+
 
 class DescuentoForm(Form):
     descuento = forms.IntegerField(max_value=100, min_value=0, required=True)
 
     def clean_descuento(self):
-        descuento = "descuento"
-        if descuento in self.cleaned_data:
-            descuento = self.cleaned_data[descuento]
+        descuento_n = "descuento"
+        if descuento_n in self.cleaned_data:
+            descuento: int = self.cleaned_data[descuento_n]
         if not (descuento and 0 <= descuento <= 100 and int(descuento) == descuento):
             raise forms.ValidationError(
                 "El valor debería ser un `int` positivo :(", "invalid"
             )
         else:
             return descuento
+
 
 """
 class ComentarioForm(ModelForm):

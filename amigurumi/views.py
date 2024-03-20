@@ -1,11 +1,16 @@
-from django.shortcuts import render, redirect
-from django.views import View
-from django.views.generic import TemplateView, ListView
-from django.http import HttpRequest
 from abc import ABC, abstractmethod
-from .forms import PatronForm, DescuentoForm
-from .models import PatronModel
 from itertools import batched
+
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.views import View
+from django.views.generic import TemplateView
+
+from amigurumi.selectors import deal_with_PatronView_buttons
+
+from .forms import DescuentoForm, PatronForm
+from .models import PatronModel
+
 # Create your views here.
 
 
@@ -16,7 +21,7 @@ class HomeView(TemplateView):
 class CreatePatronView(View):
     template_name = "patron/crear.html"
 
-    def get(self, request):
+    def get(self, request: HttpRequest) -> HttpResponse:
         form = PatronForm()
 
         viewData = {}
@@ -25,7 +30,7 @@ class CreatePatronView(View):
 
         return render(request, self.template_name, viewData)
 
-    def post(self, request: HttpRequest):
+    def post(self, request: HttpRequest) -> HttpResponse:
         form = PatronForm(request.POST)
 
         if form.is_valid():
@@ -45,7 +50,7 @@ class CreatePatronView(View):
 class ConfirmView(View):
     template_name = "patron/confirm.html"
 
-    def post(self, request):
+    def post(self, request: HttpRequest) -> HttpResponse:
         return render(request, self.template_name, {})
 
 
@@ -57,7 +62,7 @@ class CatalogoListView(View):
 class PatronView(TemplateView):
     template_name = "patron/show.html"
 
-    def get(self, request: HttpRequest, id):
+    def get(self, request: HttpRequest, id: int) -> HttpResponse:
         patron = PatronModel.objects.get(id=id)
         context = {}
 
@@ -69,22 +74,15 @@ class PatronView(TemplateView):
 
         return render(request, self.template_name, context)
 
-    def post(self, request: HttpRequest, id):
-        if "delete" in request.POST:
-            PatronModel.objects.get(id=id).delete()
-
-            if not PatronModel.objects.filter(id=id).exists():
+    def post(
+        self, request: HttpRequest, id: int
+    ) -> HttpResponse | HttpResponseRedirect:
+        match deal_with_PatronView_buttons(request, id):
+            case "delete":
                 return redirect("/catalogo/")
-        elif "descuento" in request.POST:
-            form = DescuentoForm(request.POST)
-
-            if form.is_valid():
-                descuento = form.cleaned_data["descuento"]
-                item = PatronModel.objects.get(id=id)
-                item.descuento = descuento
-                item.save()
-
-                return render(request, ConfirmView.template_name)
+            case "descuento":
+                return redirect(ConfirmView)
+        return redirect("/")
 
 
 class Contenedor(ABC):
@@ -100,7 +98,7 @@ class Contenedor(ABC):
 class CatalogoView(View):
     template_name = "patron/catalogo.html"
 
-    def get(self, request):
+    def get(self, request: HttpRequest) -> HttpResponse:
         catalogoData = PatronModel.objects.select_related().all()
         catalogo = batched(catalogoData, 3)
 
@@ -111,8 +109,7 @@ class CatalogoView(View):
 
         return render(request, self.template_name, viewData)
 
-
-#class UsersView(ListView):
+    # class UsersView(ListView):
     """A menos que se especifique un `template_name`, se buscará la plantilla `patronmodel_list.html`
     porque el model es PatronModel.
 

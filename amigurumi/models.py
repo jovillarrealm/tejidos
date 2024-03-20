@@ -17,8 +17,11 @@ class PatronModel(Model):
         return self.nombre
     
     @property
-    def precio_descuento(self):
-        return (100 - self.descuento)*self.precio/100
+    def precio_descuento(self)->float:
+        if self.descuento:
+            return (100 - self.descuento)*self.precio/100
+        else:
+            return self.precio
     
 """
 class ComentarioModel(Model):
