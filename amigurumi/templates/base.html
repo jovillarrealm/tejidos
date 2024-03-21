@@ -20,7 +20,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'amigurumi/styles.css' %}" rel="stylesheet" />
 
-    <title>{% block title %}Tejidos.com - Tienda Amigurumis{{% endblock %}</title>
+    <title>{% block title %}Tejidos.com - Tienda Amigurumis{% endblock %}</title>
 </head>
 
 <body>
@@ -41,11 +41,11 @@
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#!" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">Catálogo</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{% url 'catalogo' %}">All Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'catalogo' %}">Todos los productos</a></li>
                             <li>
                                 <hr class="dropdown-divider" />
                             </li>
-                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cpatron' %}">Cotizar Personalizado</a></li>
                             <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                         </ul>
                     </li>
@@ -91,7 +91,7 @@
 
         </script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
 
     <!-- footer -->
 
