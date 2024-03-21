@@ -27,10 +27,11 @@ class PatronModel(Model):
 
 
 class ComentarioModel(Model):
-    id = models.AutoField(primary_key=True)
     publicacion = models.ForeignKey(
         PatronModel, on_delete=models.CASCADE, related_name="comentarios"
     )
     autor = models.CharField(max_length=30, unique=True)
     calificacion = models.IntegerField(null=True, blank=True)
     comentario = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
