@@ -94,3 +94,21 @@ class ComentarioForm(ModelForm):
             "calificacion",
             "comentario",
         ]
+        exclude =('publicacion',)
+    def clean_calificación(self):
+        cali_n = "calificación"
+        if cali_n in self.cleaned_data:
+            calificacion: int = self.cleaned_data[cali_n]
+        if not (calificacion and 1 <= calificacion <= 5 and int(calificacion) == calificacion):
+            raise forms.ValidationError(
+                "El valor debería ser un `int` positivo :(", "invalid"
+            )
+        else:
+            return calificacion
+    def save(self, id, commit=True):
+        instance = super().save(commit=False)
+        # Logic to determine the author based on user input or other factors
+        instance.publicacion = PatronModel.objects.get(pk=id)  # Replace 1 with the desired logic
+        if commit:
+            instance.save()
+        return instance

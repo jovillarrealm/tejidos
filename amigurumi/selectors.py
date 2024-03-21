@@ -12,18 +12,26 @@ def update_item_descuento(item: PatronModel, form: Form):
 
 
 def deal_with_PatronView_buttons(request: HttpRequest, id: int):
+    print(request.POST)
+    actions = []
     if "delete" in request.POST:
         PatronModel.objects.get(id=id).delete()
         if not PatronModel.objects.filter(id=id).exists():
-            return "delete"
-    elif "descuento" in request.POST:
+            actions.append("delete")
+    if "descuento" in request.POST:
         form = DescuentoForm(request.POST)
         if form.is_valid():
             item = PatronModel.objects.get(id=id)
             update_item_descuento(item, form)
-            return "descuento"
-    elif "comentario" in request.POST:
+            actions.append("descuento")
+    if "comentario" in request.POST:
         form = ComentarioForm(request.POST)
-        if make_comment(form):
-            return "comentario"
-    return "error"
+        if make_comment(form, id):
+            actions.append("comentario")
+    return actions
+
+def get_comments(patron:PatronModel):
+    m = patron.comentarios.all()
+    print(m)
+    return m
+    

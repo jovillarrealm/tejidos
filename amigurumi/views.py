@@ -1,15 +1,14 @@
 from abc import ABC, abstractmethod
-from itertools import batched
 
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import TemplateView
 
-from amigurumi.selectors import deal_with_PatronView_buttons
+from amigurumi.selectors import deal_with_PatronView_buttons, get_comments
 from .services import make_patron
 
-from .forms import DescuentoForm, PatronForm
+from .forms import DescuentoForm, PatronForm, ComentarioForm
 from .models import PatronModel
 
 # Create your views here.
@@ -69,6 +68,8 @@ class PatronView(TemplateView):
         context["title"] = f"Amigurumis #{id} "
         context["DescuentoForm"] = DescuentoForm()
         context["DeleteForm"] = DescuentoForm()
+        context["ComentarioForm"] = ComentarioForm()
+        context["comentarios"] = get_comments(patron)
         context["subtitle"] = "Amigurumi seleccionado"
 
         return render(request, self.template_name, context)
@@ -76,9 +77,9 @@ class PatronView(TemplateView):
     def post(
         self, request: HttpRequest, id: int) -> HttpResponseRedirect | HttpResponsePermanentRedirect | HttpResponse:
         match deal_with_PatronView_buttons(request, id):
-            case "delete":
+            case ["delete", *_]:
                 return redirect("/catalogo/")
-            case "descuento"|"comentario":
+            case ["descuento"|"comentario", *rest]:
                 return render(request, ConfirmView.template_name)
             case _:
                 return redirect("/")
@@ -99,7 +100,8 @@ class CatalogoView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         catalogoData = PatronModel.objects.select_related().all()
-        catalogo = batched(catalogoData, 3)
+        #catalogo = batched(catalogoData, 3)
+        catalogo = catalogoData
 
         viewData = {}
         viewData["catalogo"] = catalogo
