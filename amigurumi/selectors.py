@@ -1,9 +1,9 @@
 from django.forms import Form
 from django.http import HttpRequest
 
-from .forms import DescuentoForm
-from .models import PatronModel
-
+from .forms import DescuentoForm, ComentarioForm
+from .models import PatronModel, ComentarioModel
+from .services import make_comment
 
 def update_item_descuento(item: PatronModel, form: Form):
     descuento = form.cleaned_data["descuento"]
@@ -22,3 +22,8 @@ def deal_with_PatronView_buttons(request: HttpRequest, id: int):
             item = PatronModel.objects.get(id=id)
             update_item_descuento(item, form)
             return "descuento"
+    elif "comentario" in request.POST:
+        form = ComentarioForm(request.POST)
+        if make_comment(form):
+            return "comentario"
+    return "error"

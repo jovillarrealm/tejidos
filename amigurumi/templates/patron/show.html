@@ -42,10 +42,20 @@
     </div>
     <form method="POST" action="{% url 'mostrar' id=patron.id %}">
         {% csrf_token %}
-        <input type="number" step=1 min="1" class="form-control text-center me-3" style="max-width: 6rem" name="descuento" value='{{DescuentoForm.descuento}}'/>
+        <input type="number" step=1 min="1" max="100" class="form-control text-center me-3" style="max-width: 6rem" name="descuento" value='{{DescuentoForm.descuento}}'/>
         <button class="btn btn-outline-dark flex-shrink-0" type="submit">
             <i class="bi-star-fill"></i>
             Aplicar descuento (%)
+        </button>
+    </form>
+    <form method="POST" action="{% url 'mostrar' id=patron.id %}">
+        {% csrf_token %}
+        <input type="textarea" class="form-control mb-2" placeholder="Identifiquese" name="autor" value='{{ComentarioForm.comentario}}' rows = "5" columns="30"/> 
+        <input type="number" step=1 min="1" max="5" class="form-control text-center me-3" style="max-width: 6rem" name="descuento" value='{{ComentarioForm.calificacion}}'/>
+        <input type="textarea" class="form-control mb-2" placeholder="Escriba pues el comentario" name="comentario" value='{{ComentarioForm.comentario}}' rows = "5" columns="30"/> 
+        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+            <i class="bi-star-fill"></i>
+            Comentar
         </button>
     </form>
 

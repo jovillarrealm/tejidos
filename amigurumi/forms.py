@@ -1,5 +1,5 @@
 from django.forms import ModelForm, Form
-from .models import PatronModel  # , ComentarioModel
+from .models import PatronModel, ComentarioModel
 from django import forms
 
 
@@ -86,17 +86,11 @@ class DescuentoForm(Form):
             return descuento
 
 
-"""
 class ComentarioForm(ModelForm):
     class Meta:
         model = ComentarioModel
         fields = [
-            "nombre",
-            "detalles",
-            "alto",
-            "ancho",
-            "profundidad",
-            "precio",
-            "descuento",
+            "autor",
+            "calificacion",
+            "comentario",
         ]
-    """

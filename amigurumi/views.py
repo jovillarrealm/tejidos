@@ -1,12 +1,13 @@
 from abc import ABC, abstractmethod
 from itertools import batched
 
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import TemplateView
 
 from amigurumi.selectors import deal_with_PatronView_buttons
+from .services import make_patron
 
 from .forms import DescuentoForm, PatronForm
 from .models import PatronModel
@@ -33,9 +34,7 @@ class CreatePatronView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
         form = PatronForm(request.POST)
 
-        if form.is_valid():
-            form.save()
-
+        if make_patron(form):
             return render(request, ConfirmView.template_name)
 
         else:
@@ -75,14 +74,14 @@ class PatronView(TemplateView):
         return render(request, self.template_name, context)
 
     def post(
-        self, request: HttpRequest, id: int
-    ) -> HttpResponse | HttpResponseRedirect:
+        self, request: HttpRequest, id: int) -> HttpResponseRedirect | HttpResponsePermanentRedirect | HttpResponse:
         match deal_with_PatronView_buttons(request, id):
             case "delete":
                 return redirect("/catalogo/")
-            case "descuento":
-                return redirect(ConfirmView)
-        return redirect("/")
+            case "descuento"|"comentario":
+                return render(request, ConfirmView.template_name)
+            case _:
+                return redirect("/")
 
 
 class Contenedor(ABC):
