@@ -1,22 +1,36 @@
 from django.db.models import Model
 from django.db import models
+from django.core.exceptions import ValidationError
 
-
-# Create your models here.
-class PatronModel(Model):
+class PatronModel(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30, unique=True)
     detalles = models.TextField()
 
     alto = models.FloatField()
-    ancho = models.FloatField()
-    profundidad = models.FloatField()
 
+    TAMAÑO_CHOICES = [
+        ('GR', 'Grande'),
+        ('MD', 'Mediano'),
+        ('PQ', 'Pequeño'),
+    ]
+    tamaño = models.CharField(max_length=2, choices=TAMAÑO_CHOICES)
+    
+    imagen = models.ImageField(upload_to='patrones', blank= True, null= True)
     precio = models.FloatField()
     descuento = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.nombre
+
+    def clean(self):
+        super().clean()
+        if self.tamaño == 'GR' and not (30 <= self.alto <= 35):
+            raise ValidationError("La altura para el tamaño grande debe estar entre 30 y 35 cm.")
+        elif self.tamaño == 'MD' and not (25 <= self.alto <= 29):
+            raise ValidationError("La altura para el tamaño mediano debe estar entre 25 y 29 cm.")
+        elif self.tamaño == 'PQ' and not (20 <= self.alto <= 24):
+            raise ValidationError("La altura para el tamaño pequeño debe estar entre 20 y 24 cm.")
 
     @property
     def precio_descuento(self) -> float:
@@ -24,7 +38,6 @@ class PatronModel(Model):
             return (100 - self.descuento) * self.precio / 100
         else:
             return self.precio
-
 
 class ComentarioModel(Model):
     publicacion = models.ForeignKey(

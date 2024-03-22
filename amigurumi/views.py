@@ -3,7 +3,13 @@ from abc import ABC, abstractmethod
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.shortcuts import redirect, render
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
+from django.urls import reverse_lazy
+
+from .forms import RegisterForm
 
 from amigurumi.selectors import deal_with_PatronView_buttons, get_comments
 from .services import make_patron
@@ -16,7 +22,6 @@ from .models import PatronModel
 
 class HomeView(TemplateView):
     template_name = "home.html"
-
 
 class CreatePatronView(View):
     template_name = "patron/crear.html"
@@ -119,3 +124,28 @@ class CatalogoView(View):
     template_name = "model_list.html"
     context_object_name = "example_name"
     """
+
+class CustomLoginView(LoginView):
+    template_name = 'users/login.html'
+    fields = '__all__'
+    redirect_authenticated_user = True
+    
+    def get_success_url(self):
+        return reverse_lazy('amigurumis/home')
+
+class RegisterPage(CreateView):
+    form_class = RegisterForm
+    template_name = 'users/register.html'
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('amigurumis/home')
+
+    def form_valid(self,form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(RegisterPage,self).form_valid(form)
+    
+    def get(self, *args, **kargs):
+        if self.request.user.is_authenticated:
+            return redirect('amigurumis/home')
+        return super(RegisterPage, self).get(*args, **kargs)

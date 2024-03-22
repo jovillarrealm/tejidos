@@ -1,7 +1,8 @@
 from django.forms import ModelForm, Form
 from .models import PatronModel, ComentarioModel
 from django import forms
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class PatronForm(ModelForm):
     class Meta:
@@ -10,18 +11,17 @@ class PatronForm(ModelForm):
             "nombre",
             "detalles",
             "alto",
-            "ancho",
-            "profundidad",
+            "imagen",
             "precio",
             "descuento",
+            
         ]
         """
         labels = {
             'nombre': 'Nombre completo',
             "detalles": "Especificar detalles del patron",
             "alto":"Ingresar alto (cm)",
-            "ancho":"Ingresar ancho (cm)",
-            "profundidad":"Ingresar profundidad (cm)",
+            "imagen":"Cargue la imagen",
             "precio":"Ingresar precio (COP)",
             "descuento": "Ingresar descuento de precio (%)",
         }
@@ -35,7 +35,7 @@ class PatronForm(ModelForm):
             )
         return alto
 
-    def clean_ancho(self):
+    #def clean_ancho(self):
         ancho = self.cleaned_data["ancho"]
         if ancho <= 0:
             raise forms.ValidationError(
@@ -43,7 +43,7 @@ class PatronForm(ModelForm):
             )
         return ancho
 
-    def clean_profundidad(self):
+    #def clean_profundidad(self):
         profundidad = self.cleaned_data["profundidad"]
         if profundidad <= 0:
             raise forms.ValidationError(
@@ -112,3 +112,17 @@ class ComentarioForm(ModelForm):
         if commit:
             instance.save()
         return instance
+    
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('username','email','password1','password2')
+
+    def save(self, commit=True):
+        user = super(RegisterForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user

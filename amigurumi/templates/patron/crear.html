@@ -1,71 +1,93 @@
-{% extends '../base.html' %} 
+{% extends 'base.html' %}
 
-{% block title %} {{title}} {% endblock %} 
+{% block title %} Crear Patrón {% endblock %}
 
- 
+{% block content %}
 
-{% block content %} 
+<div class="container">
 
-<div class="container"> 
+  <div class="row justify-content-center">
 
-  <div class="row justify-content-center"> 
+    <div class="col-md-8">
 
-    <div class="col-md-8"> 
+      <div class="card">
 
-      <div class="card"> 
+        <div class="card-header">Crear Patrón</div>
 
-        <div class="card-header">Crear Patrón</div> 
+          <div class="card-body">
 
-          <div class="card-body"> 
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
 
-            {% if form.errors %} 
+            <form method="POST" action="{% url 'cpatron' %}" enctype="multipart/form-data">
 
-                <ul id="errors" class="alert alert-danger list-unstyled"> 
+              {% csrf_token %}
 
-                {% for field, errors in form.errors.items %} 
+              <div class="form-group">
+                <label for="id_nombre">Nombre:</label>
+                <input type="text" class="form-control" id="id_nombre" placeholder="Ingresar nombre" name="nombre" value="{{form.data.nombre }}">
+              </div>
 
-                    {% for error in errors %} 
+              <div class="form-group">
+                  <label for="id_detalles">Detalles:</label>
+                  <textarea class="form-control" id="id_detalles" placeholder="Especificar detalles del patrón" name="detalles" rows="5" columns="30">{{form.data.detalles }}</textarea>
+              </div>
 
-                        <li>{{ error }}</li> 
+              <div class="form-group">
+                  <label for="id_alto">Alto (cm):</label>
+                  <input type="number" step="1" min="1" class="form-control" id="id_alto" placeholder="Ingresar alto (cm)" name="alto" value="{{form.data.alto }}">
+              </div>
 
-                    {% endfor %} 
+              <div class="form-group">
+                  <label for="id_tamaño">Tamaño:</label>
+                  <select class="form-control" id="id_tamaño" name="tamaño">
+                      <option value="GR">Grande</option>
+                      <option value="MD">Mediano</option>
+                      <option value="PQ">Pequeño</option>
+                  </select>
+              </div>
 
-                {% endfor %} 
+              <div class="form-group">
+                <label for="id_imagen">Imagen:</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="id_imagen" name="imagen">
+                    <label class="custom-file-label" for="id_imagen">Choose file</label>
+                </div>
+              </div>
 
-                </ul> 
+              <div class="form-group">
+                  <label for="id_precio">Precio (COP):</label>
+                  <input type="number" step="1" min="1" class="form-control" id="id_precio" placeholder="Ingresar precio (COP)" name="precio" value="{{form.data.precio}}">
+              </div>
 
-            {% endif %} 
+              <div class="form-group">
+                  <label for="id_descuento">Descuento de precio (%):</label>
+                  <input type="number" step="1" min="1" class="form-control" id="id_descuento" placeholder="Ingresar descuento de precio (%)" name="descuento" value="{{form.data.descuento}}">
+              </div>
 
- 
+              <button type="submit" class="btn btn-primary">Enviar</button>
 
-            <form method="POST" action="{% url 'cpatron' %}"> 
+            </form>
 
-              {% csrf_token %} 
+          </div>
 
-              <input type="text" class="form-control mb-2" placeholder="Ingresar nombre" name="nombre" value="{{form.data.nombre }}" /> 
-              
-              <input type="textarea" class="form-control mb-2" placeholder="Especificar detalles del patron" name="detalles" value="{{form.data.detalles }}" rows = "5" columns="30"/> 
-              
+        </div>
 
-              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar alto (cm)" name="alto" value="{{form.data.alto }}"/> 
-              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar ancho (cm)" name="ancho" value="{{form.data.ancho }}"/> 
-              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar profundidad (cm)" name="profundidad" value="{{form.data.profundidad }}"/> 
-              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar precio (COP)" name="precio" value="{{form.data.precio}}"/> 
-              <input type="number" step=1 min="1" class="form-control mb-2" placeholder="Ingresar descuento de precio (%)" name="descuento" value="{{form.data.descuento}}"/> 
-              <input type="submit" class="btn btn-primary" value="Enviar" /> 
+      </div>
 
-            </form> 
+    </div>
 
-          </div> 
+  </div>
 
-        </div> 
+</div>
 
-      </div> 
-
-    </div> 
-
-  </div> 
-
-</div> 
-
-{% endblock %} 
+{% endblock %}
