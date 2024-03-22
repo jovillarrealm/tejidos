@@ -156,7 +156,7 @@ def LogoutView(request):
     logout(request)
     return redirect('http://localhost:8000/')
 
-def home(request):
+def topcomentarios(request):
     try:
         # Obtener los tres comentarios mejor calificados con calificación no nula
         top_comentarios = ComentarioModel.objects.exclude(calificacion=None).order_by('-calificacion')[:3]
