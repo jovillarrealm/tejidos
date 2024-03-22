@@ -7,12 +7,12 @@ from .services import make_comment
 
 def update_item_descuento(item: PatronModel, form: Form):
     descuento = form.cleaned_data["descuento"]
+    print("Dirt")
     item.descuento = descuento
     item.save()
 
 
 def deal_with_PatronView_buttons(request: HttpRequest, id: int):
-    print(request.POST)
     actions = []
     if "delete" in request.POST:
         PatronModel.objects.get(id=id).delete()
@@ -20,7 +20,9 @@ def deal_with_PatronView_buttons(request: HttpRequest, id: int):
             actions.append("delete")
     if "descuento" in request.POST:
         form = DescuentoForm(request.POST)
+        print("Dirt")
         if form.is_valid():
+            print("cry")
             item = PatronModel.objects.get(id=id)
             update_item_descuento(item, form)
             actions.append("descuento")

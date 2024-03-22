@@ -49,13 +49,11 @@ class ComentarioModel(Model):
     comentario = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-<<<<<<< HEAD
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def str(self):
         return self.user.username
-=======
 class CotizacionModel(Model):
     patrones_cotizados = models.ManyToManyField(PatronModel)
     @property
@@ -79,4 +77,3 @@ class OrderModel(Model):
         for patron in self.cotizaciones.all():
             precio += patron.precio_descuento
         return precio
->>>>>>> bd25ec2604fa689584d6d87d6dc14f0f050cac45

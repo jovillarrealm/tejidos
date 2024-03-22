@@ -42,7 +42,7 @@
     </div>
     <form method="POST" action="{% url 'mostrar' id=patron.id %}">
         {% csrf_token %}
-        <input type="number" step=1 min="1" max="100" class="form-control text-center me-3" style="max-width: 6rem"
+        <input type="number" step=1 min="0" max="100" class="form-control text-center me-3" style="max-width: 6rem"
             name="descuento" value='{{DescuentoForm.descuento}}' />
         <button class="btn btn-outline-dark flex-shrink-0" type="submit">
             <i class="bi-star-fill"></i>
