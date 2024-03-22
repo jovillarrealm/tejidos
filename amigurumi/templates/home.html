@@ -1,13 +1,25 @@
-{% extends './base.html' %}
-
-{% block title %}'Home Page - Online Store'{% endblock %}
+{% extends 'base.html' %}
 
 {% block content %}
 
-<div class="text-center">
-
-    Welcome to the application
-
+<h2 class="mb-3">Home Page - Online Store</h2>
+{% if top_comentarios %}
+<div>
+    <h1>Top Comentarios Mejor Calificados</h1>
+    <ul>
+        {% for comentario in top_comentarios %}
+        <li>
+            <h2>{{ comentario.publicacion.nombre }}</h2>
+            <p>Calificación Promedio: {{ comentario.calificacion }}</p>
+            <p>Autor: {{ comentario.autor }}</p>
+            <p>Comentario: {{ comentario.comentario }}</p>
+            <!-- Puedes agregar más detalles aquí si lo deseas -->
+        </li>
+        {% endfor %}
+    </ul>
 </div>
+{% else %}
+<p>No hay patrones mejor calificados disponibles.</p>
+{% endif %}
 
 {% endblock %}

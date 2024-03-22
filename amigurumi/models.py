@@ -1,5 +1,6 @@
 from django.db.models import Model
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 class PatronModel(models.Model):
@@ -48,3 +49,8 @@ class ComentarioModel(Model):
     comentario = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def str(self):
+        return self.user.username

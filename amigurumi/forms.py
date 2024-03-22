@@ -3,6 +3,7 @@ from .models import PatronModel, ComentarioModel
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 
 class PatronForm(ModelForm):
     class Meta:
@@ -13,8 +14,7 @@ class PatronForm(ModelForm):
             "alto",
             "imagen",
             "precio",
-            "descuento",
-            
+            "descuento",   
         ]
         """
         labels = {
@@ -34,22 +34,6 @@ class PatronForm(ModelForm):
                 "El valor debería ser un `float` positivo :(", "invalid"
             )
         return alto
-
-    #def clean_ancho(self):
-        ancho = self.cleaned_data["ancho"]
-        if ancho <= 0:
-            raise forms.ValidationError(
-                "El valor debería ser un `float` positivo :(", "invalid"
-            )
-        return ancho
-
-    #def clean_profundidad(self):
-        profundidad = self.cleaned_data["profundidad"]
-        if profundidad <= 0:
-            raise forms.ValidationError(
-                "El valor debería ser un `float` positivo :(", "invalid"
-            )
-        return profundidad
 
     def clean_precio(self):
         precio = self.cleaned_data["precio"]
@@ -107,8 +91,7 @@ class ComentarioForm(ModelForm):
             return calificacion
     def save(self, id, commit=True):
         instance = super().save(commit=False)
-        # Logic to determine the author based on user input or other factors
-        instance.publicacion = PatronModel.objects.get(pk=id)  # Replace 1 with the desired logic
+        instance.publicacion = PatronModel.objects.get(pk=id)  
         if commit:
             instance.save()
         return instance
@@ -118,11 +101,12 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username','email','password1','password2')
+        fields = ('username','password1','password2')
 
-    def save(self, commit=True):
-        user = super(RegisterForm, self).save(commit=False)
-        user.email = self.cleaned_data["email"]
-        if commit:
-            user.save()
-        return user
+    def __init__(self, *args, **kargs):
+        super(RegisterForm, self).__init__(*args, **kargs)
+        for fieldname in ['username','password1','password2']:
+            self.fields[fieldname].help_text = None
+            self.fields[fieldname].widget.attrs.update({'class':"form-control"})
+            
+       

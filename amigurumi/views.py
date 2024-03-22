@@ -6,16 +6,18 @@ from django.views import View
 from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import login
+from django.contrib.auth import login,logout
+from django.contrib import messages
 from django.urls import reverse_lazy
-
+from django.db import models, IntegrityError
+from django.db.models import Avg
 from .forms import RegisterForm
 
 from amigurumi.selectors import deal_with_PatronView_buttons, get_comments
 from .services import make_patron
 
 from .forms import DescuentoForm, PatronForm, ComentarioForm
-from .models import PatronModel
+from .models import PatronModel,ComentarioModel, UserProfile
 
 # Create your views here.
 
@@ -23,7 +25,8 @@ from .models import PatronModel
 class HomeView(TemplateView):
     template_name = "home.html"
 
-class CreatePatronView(View):
+
+class CreatePatronView(LoginRequiredMixin,View):
     template_name = "patron/crear.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
@@ -58,8 +61,8 @@ class ConfirmView(View):
 
 
 class CatalogoListView(View):
-    model = PatronModel
     template_name = "patron/catalogo.html"
+    model = PatronModel
 
 
 class PatronView(TemplateView):
@@ -105,7 +108,6 @@ class CatalogoView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         catalogoData = PatronModel.objects.select_related().all()
-        #catalogo = batched(catalogoData, 3)
         catalogo = catalogoData
 
         viewData = {}
@@ -131,21 +133,38 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
     
     def get_success_url(self):
-        return reverse_lazy('amigurumis/home')
+        return reverse_lazy('home')
 
-class RegisterPage(CreateView):
-    form_class = RegisterForm
-    template_name = 'users/register.html'
-    redirect_authenticated_user = True
-    success_url = reverse_lazy('amigurumis/home')
+def RegisterPage(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                user = form.save()
+                
+                UserProfile.objects.create(user=user)
 
-    def form_valid(self,form):
-        user = form.save()
-        if user is not None:
-            login(self.request, user)
-        return super(RegisterPage,self).form_valid(form)
-    
-    def get(self, *args, **kargs):
-        if self.request.user.is_authenticated:
-            return redirect('amigurumis/home')
-        return super(RegisterPage, self).get(*args, **kargs)
+                login(request, user)
+                return redirect('home')
+            except IntegrityError:
+                return render(request, 'users/register.html', {'form': form, 'error': 'Username already taken. Choose a new username.'})
+    else:
+        form = RegisterForm()
+    return render(request, 'users/register.html',{'form': form})
+
+def LogoutView(request):
+    logout(request)
+    return redirect('http://localhost:8000/')
+
+def home(request):
+    try:
+        # Obtener los tres comentarios mejor calificados con calificación no nula
+        top_comentarios = ComentarioModel.objects.exclude(calificacion=None).order_by('-calificacion')[:3]
+    except ComentarioModel.DoesNotExist:
+        # Manejar el caso en el que no se encuentren comentarios
+        top_comentarios = []
+
+    context = {
+        'top_comentarios': top_comentarios
+    }
+    return render(request, 'home.html', context)
