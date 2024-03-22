@@ -48,3 +48,26 @@ class ComentarioModel(Model):
     comentario = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+class CotizacionModel(Model):
+    patrones_cotizados = models.ManyToManyField(PatronModel)
+    @property
+    def total_orden(self) -> float:
+        precio = 0
+        for patron in self.patrones_cotizados.all():
+            precio += patron.precio_descuento
+        return precio
+
+class OrderModel(Model):
+    patrones = models.ManyToManyField(PatronModel)
+    cotizaciones = models.ManyToManyField(CotizacionModel)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    @property
+    def total_orden(self) -> float:
+        precio = 0
+        for patron in self.patrones.all():
+            precio += patron.precio_descuento
+        for patron in self.cotizaciones.all():
+            precio += patron.precio_descuento
+        return precio
