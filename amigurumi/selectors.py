@@ -1,4 +1,3 @@
-from multiprocessing.managers import BaseManager
 from django.forms import Form
 from django.http import HttpRequest
 
@@ -32,11 +31,11 @@ def deal_with_PatronView_buttons(request: HttpRequest, id: int):
     return actions
 
 
-def get_comments(patron: PatronModel) -> BaseManager[ComentarioModel]:  # type: ignore
+def get_comments(patron: PatronModel):
     return patron.comentarios.all()  # type: ignore
 
 
-def get_top_comentarios() -> BaseManager[ComentarioModel] | None:  # type: ignore
+def get_top_comentarios():  # type: ignore
     try:
         # Obtener los tres comentarios mejor calificados con calificación no nula
         top_comentarios = ComentarioModel.objects.exclude(calificacion=None).order_by(
