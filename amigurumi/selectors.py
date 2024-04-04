@@ -1,13 +1,14 @@
+from multiprocessing.managers import BaseManager
 from django.forms import Form
 from django.http import HttpRequest
 
-from .forms import DescuentoForm, ComentarioForm
-from .models import PatronModel, ComentarioModel
+from .forms import ComentarioForm, DescuentoForm
+from .models import ComentarioModel, PatronModel
 from .services import make_comment
+
 
 def update_item_descuento(item: PatronModel, form: Form):
     descuento = form.cleaned_data["descuento"]
-    print("Dirt")
     item.descuento = descuento
     item.save()
 
@@ -20,9 +21,7 @@ def deal_with_PatronView_buttons(request: HttpRequest, id: int):
             actions.append("delete")
     if "descuento" in request.POST:
         form = DescuentoForm(request.POST)
-        print("Dirt")
         if form.is_valid():
-            print("cry")
             item = PatronModel.objects.get(id=id)
             update_item_descuento(item, form)
             actions.append("descuento")
@@ -32,8 +31,18 @@ def deal_with_PatronView_buttons(request: HttpRequest, id: int):
             actions.append("comentario")
     return actions
 
-def get_comments(patron:PatronModel):
-    m = patron.comentarios.all()
-    print(m)
-    return m
-    
+
+def get_comments(patron: PatronModel) -> BaseManager[ComentarioModel]:  # type: ignore
+    return patron.comentarios.all()  # type: ignore
+
+
+def get_top_comentarios() -> BaseManager[ComentarioModel] | None:  # type: ignore
+    try:
+        # Obtener los tres comentarios mejor calificados con calificación no nula
+        top_comentarios = ComentarioModel.objects.exclude(calificacion=None).order_by(
+            "-calificacion"
+        )[:3]
+    except ComentarioModel.DoesNotExist:
+        # Manejar el caso en el que no se encuentren comentarios
+        top_comentarios = None
+    return top_comentarios  # type: ignore

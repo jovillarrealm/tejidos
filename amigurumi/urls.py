@@ -3,10 +3,10 @@ from django.urls import path
 from .views import HomeView, CreatePatronView, PatronView, CatalogoView, CustomLoginView, RegisterPage, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
+
 
 urlpatterns = [
-    path('register/', views.RegisterPage, name="register"),
+    path('register/', RegisterPage, name="register"),
     path('login/', CustomLoginView.as_view(), name="login"),
     path('logout/', LogoutView, name="logout"),
     path("", HomeView.as_view(), name="home"),
