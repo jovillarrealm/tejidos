@@ -3,7 +3,6 @@ from .models import PatronModel, ComentarioModel
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
 
 class PatronForm(ModelForm):
     class Meta:
@@ -77,11 +76,7 @@ class DescuentoForm(Form):
 class ComentarioForm(ModelForm):
     class Meta:
         model = ComentarioModel
-        fields = [
-            "autor",
-            "calificacion",
-            "comentario",
-        ]
+        fields = "__all__"
         exclude =('publicacion',)
     def clean_calificación(self):
         cali_n = "calificación"
