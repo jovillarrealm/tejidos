@@ -30,4 +30,5 @@ jobs:
         uv pip install -r requirements.txt
     - name: Run Tests
       run: |
+        source .venv/bin/activate
         python manage.py test
