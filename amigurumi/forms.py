@@ -10,6 +10,7 @@ class PatronForm(ModelForm):
         fields = [
             "nombre",
             "detalles",
+        
             "alto",
             "imagen",
             "precio",
