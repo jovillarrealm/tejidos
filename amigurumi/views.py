@@ -19,6 +19,7 @@ from amigurumi.selectors import (
     deal_with_PatronView_buttons,
     get_comments,
     get_top_comentarios,
+    split_chunks
 )
 
 from .forms import ComentarioForm, DescuentoForm, PatronForm, RegisterForm
@@ -115,10 +116,9 @@ class CatalogoView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         catalogoData = PatronModel.objects.select_related().all()
-        catalogo = catalogoData
-
+        catalogo_rows = split_chunks(catalogoData)
         viewData = {}
-        viewData["catalogo"] = catalogo
+        viewData["catalogo_rows"] = catalogo_rows
         viewData["title"] = "Catálogo de Amigurumis"
         viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
 
