@@ -20,7 +20,7 @@ services:
 
   # Nginx reverse proxy service
   nginx-proxy:
-    image: nginx:stable-alpine
+    image: nginx:bookworm
     volumes:
       - ./nginx-conf:/etc/nginx/conf.d:ro
       - certbot-etc:/etc/letsencrypt
