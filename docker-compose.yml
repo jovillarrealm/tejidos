@@ -2,7 +2,7 @@ version: "3.9"  # Specify Docker Compose version
 
 services:
   # Django service
-  tejidos:
+  tejidoservice:
     build: .  # Build the image from the current directory (./)
     volumes:
       - ./tejidos:/app  # Mount the tejidos directory as /app in the container
@@ -17,8 +17,8 @@ services:
   nginx-proxy:
     image: nginx:stable-alpine  # Use the official Nginx image
     volumes:
-      - "nginx-conf:/etc/nginx/conf.d:ro"  # Mount the nginx-conf directory containing configuration
-      - "certbot-etc:/etc/letsencrypt"  # Persistent volume for Letsencrypt certificates (create this volume first)
+      - ./nginx-conf:/etc/nginx/conf.d:ro # Mount the nginx-conf directory containing configuration
+      - certbot-etc:/etc/letsencrypt  # Persistent volume for Letsencrypt certificates (create this volume first)
     ports:
       - "80:80"  # Map container port 80 to host port 80
       - "443:443"  # Map container port 443 to host port 443
@@ -30,7 +30,7 @@ services:
     image: certbot/certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
-      - nginx-conf:/etc/nginx/conf.d:/etc/nginx/conf.d:ro  # Read-only mount for Nginx configuration
+      - nginx-conf:/etc/nginx/conf.d:ro  # Read-only mount for Nginx configuration
     command: ["certonly", "--webserver", "nginx", "-d", "jorgeavm.top", "--agree-tos", "-m", "javillarrm@eafit.edu.co"]
 
 volumes:
