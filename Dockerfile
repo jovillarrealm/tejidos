@@ -8,12 +8,12 @@ ENV PYTHONUNBUFFERED 1
 # Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY tejidos/requirements.txt /app/
+# Copy and install dependencies
+COPY ./tejidos/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
-COPY tejidos /app/
+COPY ./tejidos /app/
 
 # Collect static files
 RUN python manage.py collectstatic --noinput

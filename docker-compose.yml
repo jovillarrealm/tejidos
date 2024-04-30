@@ -3,7 +3,9 @@ version: "3.9"
 services:
   # Django service
   tejidoservice:
-    build: ./tejidos
+    build:
+      context: .
+      dockerfile: ./tejidos/Dockerfile
     ports:
       - "8000:8000"
     environment:
