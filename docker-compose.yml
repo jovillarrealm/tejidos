@@ -5,7 +5,7 @@ services:
   tejidoservice:
     build: .  # Build the image from the current directory (./)
     volumes:
-      - ./tejidos:/app  # Mount the tejidos directory as /app in the container
+      - ./:/app  # Mount the tejidos directory as /app in the container
     ports:
       - "8000:8000"  # Map container port 8000 to host port 8000
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
