@@ -23,7 +23,7 @@ services:
       - "80:80"  # Map container port 80 to host port 80
       - "443:443"  # Map container port 443 to host port 443
     depends_on:
-      - tejidos  # Ensure Nginx starts after the Django service
+      - tejidoservice  # Ensure Nginx starts after the Django service
     restart: unless-stopped  # Restart Nginx container automatically
 
   certbot:
