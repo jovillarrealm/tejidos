@@ -13,7 +13,8 @@ class CotizacionFactory(factory.django.DjangoModelFactory):
             return
         num_patrons = random.randint(1,10)
         for _ in range(num_patrons):
-            patron = PatronFactory(publicacion=self)
+            patron = PatronFactory()
+
 class PatronFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = PatronModel

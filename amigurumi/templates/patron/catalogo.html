@@ -9,8 +9,9 @@
 {% block content %}
 
 
+{% for row in catalogo_rows %}
 <div class="row">
-    {% for patron in catalogo %}
+    {% for patron in row %}
 
     <div class="col mb-5">
         <div class="card h-100">
@@ -58,8 +59,9 @@
     </div>
 
     {% endfor %}
-
+    
 </div>
+{% endfor %}
 <!-- Related items section-->
 <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">

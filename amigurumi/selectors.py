@@ -45,3 +45,27 @@ def get_top_comentarios():  # type: ignore
         # Manejar el caso en el que no se encuentren comentarios
         top_comentarios = None
     return top_comentarios  # type: ignore
+
+
+def split_chunks(data, chunk_size: int = 4):
+    """
+    Splits a list into chunks of a specified size.
+
+    Args:
+        data: The list to be split.
+        chunk_size: The desired size of each chunk.
+
+    Returns:
+        A list of lists, where each sublist is a chunk of the original list.
+    """
+    chunks = []
+    current_chunk = []
+    for item in data:
+        current_chunk.append(item)
+        if len(current_chunk) == chunk_size:
+            chunks.append(current_chunk)
+            current_chunk = []
+    # Append the remaining items even if they don't fill a chunk
+    if current_chunk:
+        chunks.append(current_chunk)
+    return chunks

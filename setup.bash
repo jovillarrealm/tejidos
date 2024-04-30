@@ -1,42 +1,33 @@
 #!/bin/bash
 
-# Update package lists
+# Update apt package lists
 sudo apt update
-sudo apt install git curl -y
 
+# Install git
+sudo apt install -y git
 
-# Check if python3 is installed
-if ! command -v python3 &> /dev/null
-then
-  echo "Python3 not found. Installing..."
-  sudo apt install python3-full
-fi
+# Add Docker repository key
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 
-# On macOS and Linux.
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Add Docker repository
+sudo apt install -y software-properties-common
+sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/debian bookworm stable"
 
-# Get the virtual environment name (optional, modify as needed)
-venv_name=".venv"
+# Update apt lists again
+sudo apt update
 
-# Check if virtual environment already exists
-if [ -d "$venv_name" ]; then
-  echo "Virtual environment '$venv_name' already exists. Activating..."
-  source "$venv_name/bin/activate"
-else
-  echo "Creating virtual environment '$venv_name'..."
-  uv venv "$venv_name"
-  source "$venv_name/bin/activate"
-fi
+# Install Docker and docker-compose
+sudo apt install -y docker docker-compose
+docker -v
 
-# Install packages from requirements.txt
-if [ -f "requirements.txt" ]; then
-  echo "Installing packages from requirements.txt..."
-  uv pip install -r requirements.txt
-else
-  echo "requirements.txt not found. Skipping package installation."
-fi
+# Clone the project from GitHub
+git clone https://github.com/jovillarrealm/tejidos
 
-echo "Done!"
+cd tejidos
 
-# Deactivate the virtual environment (optional, uncomment if needed)
-# deactivate
+docker-compose up -d
+
+echo "Django project setup (using tejidos repository) with HTTPS completed.
+**Make sure you have DNS records pointing your domain name (jorgeavm.top) to your GCP instance.**
+
+Access your project at https://jorgeavm.top"
