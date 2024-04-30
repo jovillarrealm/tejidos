@@ -23,7 +23,7 @@ docker -v
 # Clone the project from GitHub
 git clone --branch feat/jorge https://github.com/jovillarrealm/tejidos
 
-mv ./tejidos/docker-compose.yaml ./
+mv ./tejidos/docker-compose.yml ./
 mv ./tejidos/nginx-conf ./
 
 docker-compose up -d
