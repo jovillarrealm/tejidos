@@ -21,7 +21,7 @@ sudo apt install -y docker docker-compose
 docker -v
 
 # Clone the project from GitHub
-git clone https://github.com/jovillarrealm/tejidos
+git clone --branch feat/jorge https://github.com/jovillarrealm/tejidos
 
 cd tejidos
 

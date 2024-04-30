@@ -17,7 +17,7 @@ services:
   nginx-proxy:
     image: nginx:stable-alpine  # Use the official Nginx image
     volumes:
-      - ./nginx-conf:/etc/nginx/conf.d  # Mount the nginx-conf directory containing configuration
+      - - nginx-conf:/etc/nginx/conf.d:ro  # Mount the nginx-conf directory containing configuration
       - certbot-etc:/etc/letsencrypt  # Persistent volume for Letsencrypt certificates (create this volume first)
     ports:
       - "80:80"  # Map container port 80 to host port 80
