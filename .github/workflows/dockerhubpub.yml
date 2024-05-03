@@ -21,8 +21,8 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASS
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag jovillarrealm/docker-tutorial-random-quotes:latest
+      run: docker build . --file Dockerfile --tag jovillarrealm/dockerized-tejidos:latest
       
     - name: Docker Push
-      run: docker push jovillarrealm/docker-tutorial-random-quotes:latest
+      run: docker push dockerized-tejidos:latest
 
