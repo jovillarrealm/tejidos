@@ -24,5 +24,5 @@ jobs:
       run: docker build . --file Dockerfile --tag jovillarrealm/dockerized-tejidos:latest
       
     - name: Docker Push
-      run: docker push dockerized-tejidos:latest
+      run: docker push jovillarrealm/dockerized-tejidos:latest
 
