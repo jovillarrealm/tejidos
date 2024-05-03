@@ -1,39 +1,43 @@
-version: "3.9"  # Specify Docker Compose version
+version: "3.9"
 
 services:
   # Django service
-  tejidos:
-    build: .  # Build the image from the current directory (./)
-    volumes:
-      - ./tejidos:/app  # Mount the tejidos directory as /app in the container
+  tejidoservice:
+    build:
+      context: .
+      dockerfile: ./tejidos/Dockerfile
     ports:
-      - "8000:8000"  # Map container port 8000 to host port 8000
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+      - "8000:8000"
     environment:
-      - LETSENCRYPT_HOST=jorgeavm.top  # Optional environment variable for Letsencrypt (replace with your domain)
-      - LETSENCRYPT_EMAIL=javillarrm@eafit.edu.co  # Optional environment variable for Letsencrypt (replace with your email)
+      - LETSENCRYPT_HOST=jorgeavm.top
+      - LETSENCRYPT_EMAIL=javillarrm@eafit.edu.co
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d:ro
+      - certbot-etc:/etc/letsencrypt
+    depends_on:
+      - certbot
+    restart: unless-stopped
 
   # Nginx reverse proxy service
   nginx-proxy:
-    image: nginx:stable-alpine  # Use the official Nginx image
+    image: nginx:bookworm
     volumes:
-      - ./nginx-conf:/etc/nginx/conf.d  # Mount the nginx-conf directory containing configuration
-      - certbot-etc:/etc/letsencrypt  # Persistent volume for Letsencrypt certificates (create this volume first)
+      - ./nginx-conf:/etc/nginx/conf.d:ro
+      - certbot-etc:/etc/letsencrypt
     ports:
-      - "80:80"  # Map container port 80 to host port 80
-      - "443:443"  # Map container port 443 to host port 443
+      - "80:80"
+      - "443:443"
     depends_on:
-      - tejidos  # Ensure Nginx starts after the Django service
-    restart: unless-stopped  # Restart Nginx container automatically
+      - tejidoservice
+    restart: unless-stopped
+
+  # Certbot service
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - ./nginx-conf:/etc/nginx/conf.d:ro
+    command: ["certonly", "--webserver", "nginx", "-d", "jorgeavm.top", "--agree-tos", "-m", "javillarrm@eafit.edu.co"]
 
 volumes:
-  certbot-etc:  # Define the persistent volume for Letsencrypt certificates
-
-# Optional Letsencrypt service (uncomment and configure if needed)
-  services:
-   certbot:
-     image: certbot/certbot
-     volumes:
-       - certbot-etc:/etc/letsencrypt
-       - nginx-conf:/etc/nginx/conf.d:/etc/nginx/conf.d:ro  # Read-only mount for Nginx configuration
-     command: ["certonly", "--webserver", "nginx", "-d", "jorgeavm.top", "--agree-tos", "-m", "javillarrm@eafit.edu.co"]  # Replace with your domain and email
+  certbot-etc:
