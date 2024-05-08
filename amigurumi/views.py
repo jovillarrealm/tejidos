@@ -1,5 +1,3 @@
-from abc import ABC, abstractmethod
-
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -19,12 +17,16 @@ from amigurumi.selectors import (
     deal_with_PatronView_buttons,
     get_comments,
     get_top_comentarios,
-    split_chunks
+    get_catalogoData,
+    split_chunks,
+    ReporteXlsx,
+    ReporteArrow,
 )
 
 from .forms import ComentarioForm, DescuentoForm, PatronForm, RegisterForm
 from .models import PatronModel, UserProfile
 from .services import make_patron
+from .interface import Reporte
 
 # Create your views here.
 
@@ -67,11 +69,6 @@ class ConfirmView(View):
         return render(request, self.template_name, {})
 
 
-class CatalogoListView(View):
-    template_name = "patron/catalogo.html"
-    model = PatronModel
-
-
 class PatronView(TemplateView):
     template_name = "patron/show.html"
 
@@ -101,21 +98,11 @@ class PatronView(TemplateView):
                 return redirect("home")
 
 
-class Contenedor(ABC):
-    @abstractmethod
-    def agregar(self):
-        pass
-
-    @abstractmethod
-    def remover(self):
-        pass
-
-
 class CatalogoView(View):
     template_name = "patron/catalogo.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        catalogoData = PatronModel.objects.select_related().all()
+        catalogoData = get_catalogoData()
         catalogo_rows = split_chunks(catalogoData)
         viewData = {}
         viewData["catalogo_rows"] = catalogo_rows
@@ -123,7 +110,6 @@ class CatalogoView(View):
         viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
 
         return render(request, self.template_name, viewData)
-
 
 
 class CustomLoginView(LoginView):
@@ -135,7 +121,7 @@ class CustomLoginView(LoginView):
         return reverse_lazy("home")
 
 
-def RegisterPage(request):
+def RegisterPage(request: HttpRequest):
     if request.method == "POST":
         form = RegisterForm(request.POST, request.FILES)
         if form.is_valid():
@@ -169,3 +155,16 @@ def topcomentarios(request):
     top_comentarios = get_top_comentarios()
     context = {"top_comentarios": top_comentarios}
     return render(request, "home.html", context)
+
+
+class ReporteView(View):
+    def get(self, request, format: str):
+        match format:
+            case "excel":
+                reporte: Reporte = ReporteXlsx()
+            case "pdf":
+                reporte: Reporte = ReporteArrow()
+            case _:
+                return redirect("catalogo")
+        catalogoData = get_catalogoData()
+        return reporte.reportar(catalogoData)

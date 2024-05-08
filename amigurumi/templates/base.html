@@ -35,13 +35,16 @@
                     {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a></li>
                     {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'catalogo' %}">Catálogo</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catálogo</a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">Otros</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'catalogo' %}">Todos los productos</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'cpatron' %}">Crear patrón</a></li>
-                            <li><a class="dropdown-item" href="#!">Nuevos productos</a></li>
+                            <li><a class="dropdown-item" href="{% url 'reporte' 'pdf' %}">Catálogo como PDF</a></li>
+                            <li><a class="dropdown-item" href="{% url 'reporte' 'excel' %}">Catálogo como Excel</a></li>
+
                         </ul>
                     </li>
                 </ul>
