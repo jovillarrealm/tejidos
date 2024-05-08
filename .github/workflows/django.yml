@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feat/jorge" ]
   pull_request:
     branches: [ "main" ]
 
@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        python-version: [3.11]
+        python-version: [3.11.2]
 
     steps:
     - uses: actions/checkout@v3
