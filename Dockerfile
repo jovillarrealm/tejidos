@@ -1,5 +1,5 @@
 # Use Python 3.11 base image
-FROM python:3.11
+FROM python:3.11.2
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
