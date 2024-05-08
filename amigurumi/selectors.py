@@ -13,7 +13,7 @@ from datetime import date
 # For ReporteArrow
 import pyarrow as pa
 
-
+import pyarrow.feather as feather
 
 
 
@@ -112,8 +112,6 @@ class ReporteXlsx(Reporte):
             result.append(p)
         buffer = self.build_excel(result, path)
         return FileResponse(buffer,as_attachment=True, filename="catalogo.xlsx")
-        
-
 
 
 
@@ -143,12 +141,9 @@ class ReporteArrow(Reporte):
         # Create a PyArrow table from arrays and schema
         table: pa.Table = pa.Table.from_arrays(arrays, schema=schema)
         buffer = io.BytesIO()
-        writer = pa.ipc.RecordBatchFileWriter(buffer, table.schema)
-        for batch in table.to_batches():
-            writer.write_batch(batch)
-        writer.close()
-        buffer_data = buffer.getvalue()
-        return buffer_data
+        feather.write_feather(table,buffer)
+        buffer.seek(0)
+        return buffer
         # Create a Django response object, and specify content_type as pdf
 
     def reportar(self, data):
@@ -156,6 +151,5 @@ class ReporteArrow(Reporte):
         for p in data:
             p = (p.nombre, p.tamaño, p.precio, p.precio_descuento)
             result.append(p)
-        print(result)
         response = self.build_file(result)
         return FileResponse(response, content_type='binary/octet-stream', filename="catalogo.arrow")
