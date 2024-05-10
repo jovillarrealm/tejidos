@@ -1,7 +1,6 @@
 import io
 from django.forms import Form
 from django.http import FileResponse, HttpRequest
-from django.template.loader import get_template
 
 from .forms import ComentarioForm, DescuentoForm
 from .models import ComentarioModel, PatronModel

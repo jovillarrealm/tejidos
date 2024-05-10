@@ -21,11 +21,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', include('amigurumi.urls')),
     path('admin/', admin.site.urls),
+    path('api/', include('apigurumi.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
+
 urlpatterns += i18n_patterns(
-    path('', include('amigurumi.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
     prefix_default_language=False,
 )
