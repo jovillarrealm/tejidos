@@ -162,7 +162,7 @@ class ReporteView(View):
         match format:
             case "excel":
                 reporte: Reporte = ReporteXlsx()
-            case "pdf":
+            case "arrow":
                 reporte: Reporte = ReporteArrow()
             case _:
                 return redirect("catalogo")
