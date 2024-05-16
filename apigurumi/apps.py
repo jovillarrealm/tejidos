@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class ApigurumiConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apigurumi'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "apigurumi"

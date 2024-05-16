@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,54 +14,115 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='CotizacionModel',
+            name="CotizacionModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='PatronModel',
+            name="PatronModel",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('nombre', models.CharField(max_length=30, unique=True)),
-                ('detalles', models.TextField()),
-                ('alto', models.FloatField()),
-                ('tamaño', models.CharField(choices=[('GR', 'Grande'), ('MD', 'Mediano'), ('PQ', 'Pequeño')], max_length=2)),
-                ('imagen', models.ImageField(blank=True, null=True, upload_to='patrones')),
-                ('precio', models.FloatField()),
-                ('descuento', models.IntegerField(blank=True, default=0, null=True)),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("nombre", models.CharField(max_length=30, unique=True)),
+                ("detalles", models.TextField()),
+                ("alto", models.FloatField()),
+                (
+                    "tamaño",
+                    models.CharField(
+                        choices=[
+                            ("GR", "Grande"),
+                            ("MD", "Mediano"),
+                            ("PQ", "Pequeño"),
+                        ],
+                        max_length=2,
+                    ),
+                ),
+                (
+                    "imagen",
+                    models.ImageField(blank=True, null=True, upload_to="patrones"),
+                ),
+                ("precio", models.FloatField()),
+                ("descuento", models.IntegerField(blank=True, default=0, null=True)),
             ],
         ),
         migrations.CreateModel(
-            name='OrderModel',
+            name="OrderModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('cotizaciones', models.ManyToManyField(null=True, to='amigurumi.cotizacionmodel')),
-                ('patrones', models.ManyToManyField(to='amigurumi.patronmodel')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "cotizaciones",
+                    models.ManyToManyField(null=True, to="amigurumi.cotizacionmodel"),
+                ),
+                ("patrones", models.ManyToManyField(to="amigurumi.patronmodel")),
             ],
         ),
         migrations.AddField(
-            model_name='cotizacionmodel',
-            name='patrones_cotizados',
-            field=models.ManyToManyField(to='amigurumi.patronmodel'),
+            model_name="cotizacionmodel",
+            name="patrones_cotizados",
+            field=models.ManyToManyField(to="amigurumi.patronmodel"),
         ),
         migrations.CreateModel(
-            name='ComentarioModel',
+            name="ComentarioModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('autor', models.CharField(max_length=30)),
-                ('calificacion', models.IntegerField(blank=True, null=True)),
-                ('comentario', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('publicacion', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comentarios', to='amigurumi.patronmodel')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("autor", models.CharField(max_length=30)),
+                ("calificacion", models.IntegerField(blank=True, null=True)),
+                ("comentario", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "publicacion",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comentarios",
+                        to="amigurumi.patronmodel",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='UserProfile',
+            name="UserProfile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

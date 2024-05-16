@@ -2,8 +2,8 @@ from django.test import TestCase
 from .models import PatronModel, ComentarioModel
 from .factories import PatronFactory, ComentarioFactory
 
-class PatronModelTest(TestCase):
 
+class PatronModelTest(TestCase):
     def test_create_patron(self):
         """Tests creating a new Patron using the factory"""
         patron = PatronFactory()
@@ -16,7 +16,9 @@ class PatronModelTest(TestCase):
         patron.save()
 
         retrieved_patron = PatronModel.objects.get(pk=patron.pk)
-        self.assertEqual(patron.nombre, retrieved_patron.nombre)  # Assert retrieved data matches
+        self.assertEqual(
+            patron.nombre, retrieved_patron.nombre
+        )  # Assert retrieved data matches
 
     def test_update_patron(self):
         """Tests updating an existing Patron"""
@@ -28,7 +30,9 @@ class PatronModelTest(TestCase):
         patron.save()
 
         updated_patron = PatronModel.objects.get(pk=patron.pk)
-        self.assertEqual(updated_patron.nombre, new_nombre)  # Assert update reflects in data
+        self.assertEqual(
+            updated_patron.nombre, new_nombre
+        )  # Assert update reflects in data
 
     def test_delete_patron(self):
         """Tests deleting an existing Patron"""
@@ -40,8 +44,8 @@ class PatronModelTest(TestCase):
         with self.assertRaises(PatronModel.DoesNotExist):
             PatronModel.objects.get(pk=patron.pk)  # Assert deletion using DoesNotExist
 
-class ComentarioModelTest(TestCase):
 
+class ComentarioModelTest(TestCase):
     def test_create_comentario(self):
         """Tests creating a new Comentario"""
         patron = PatronFactory()
@@ -56,7 +60,9 @@ class ComentarioModelTest(TestCase):
         comentario.save()
 
         retrieved_comentario = ComentarioModel.objects.get(pk=comentario.pk)
-        self.assertEqual(comentario.comentario, retrieved_comentario.comentario)  # Assert data matches
+        self.assertEqual(
+            comentario.comentario, retrieved_comentario.comentario
+        )  # Assert data matches
 
     def test_update_comentario(self):
         """Tests updating an existing Comentario"""
@@ -69,7 +75,9 @@ class ComentarioModelTest(TestCase):
         comentario.save()
 
         updated_comentario = ComentarioModel.objects.get(pk=comentario.pk)
-        self.assertEqual(updated_comentario.comentario, new_comentario)  # Assert update reflects
+        self.assertEqual(
+            updated_comentario.comentario, new_comentario
+        )  # Assert update reflects
 
     def test_delete_comentario(self):
         """Tests deleting an existing Comentario"""
@@ -80,6 +88,9 @@ class ComentarioModelTest(TestCase):
         comentario.delete()
 
         with self.assertRaises(ComentarioModel.DoesNotExist):
-            ComentarioModel.objects.get(pk=comentario.pk)  # Assert deletion using DoesNotExist
+            ComentarioModel.objects.get(
+                pk=comentario.pk
+            )  # Assert deletion using DoesNotExist
+
 
 # Note: Tests for CotizacionModel and OrderModel would follow a similar structure

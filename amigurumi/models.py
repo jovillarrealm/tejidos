@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+
 class PatronModel(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30, unique=True)
@@ -11,13 +12,13 @@ class PatronModel(models.Model):
     alto = models.FloatField()
 
     TAMAÑO_CHOICES = [
-        ('GR', 'Grande'),
-        ('MD', 'Mediano'),
-        ('PQ', 'Pequeño'),
+        ("GR", "Grande"),
+        ("MD", "Mediano"),
+        ("PQ", "Pequeño"),
     ]
     tamaño = models.CharField(max_length=2, choices=TAMAÑO_CHOICES)
-    
-    imagen = models.ImageField(upload_to='media/patrones', blank= True, null= True)
+
+    imagen = models.ImageField(upload_to="media/patrones", blank=True, null=True)
     precio = models.FloatField()
     descuento = models.IntegerField(null=True, blank=True, default=0)
 
@@ -26,12 +27,18 @@ class PatronModel(models.Model):
 
     def clean(self):
         super().clean()
-        if self.tamaño == 'GR' and not (30 <= self.alto <= 35):
-            raise ValidationError("La altura para el tamaño grande debe estar entre 30 y 35 cm.")
-        elif self.tamaño == 'MD' and not (25 <= self.alto <= 29):
-            raise ValidationError("La altura para el tamaño mediano debe estar entre 25 y 29 cm.")
-        elif self.tamaño == 'PQ' and not (20 <= self.alto <= 24):
-            raise ValidationError("La altura para el tamaño pequeño debe estar entre 20 y 24 cm.")
+        if self.tamaño == "GR" and not (30 <= self.alto <= 35):
+            raise ValidationError(
+                "La altura para el tamaño grande debe estar entre 30 y 35 cm."
+            )
+        elif self.tamaño == "MD" and not (25 <= self.alto <= 29):
+            raise ValidationError(
+                "La altura para el tamaño mediano debe estar entre 25 y 29 cm."
+            )
+        elif self.tamaño == "PQ" and not (20 <= self.alto <= 24):
+            raise ValidationError(
+                "La altura para el tamaño pequeño debe estar entre 20 y 24 cm."
+            )
 
     @property
     def precio_descuento(self) -> float:
@@ -39,6 +46,7 @@ class PatronModel(models.Model):
             return (100 - self.descuento) * self.precio / 100
         else:
             return self.precio
+
 
 class ComentarioModel(Model):
     publicacion = models.ForeignKey(
@@ -50,6 +58,7 @@ class ComentarioModel(Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -58,6 +67,7 @@ class UserProfile(models.Model):
 
 class CotizacionModel(Model):
     patrones_cotizados = models.ManyToManyField(PatronModel)
+
     @property
     def total_order(self) -> float:
         precio = 0
@@ -65,11 +75,11 @@ class CotizacionModel(Model):
             precio += patron.precio_descuento
         return precio
 
+
 class OrderModel(Model):
     patrones = models.ManyToManyField(PatronModel)
     cotizaciones = models.ManyToManyField(CotizacionModel, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
 
     @property
     def total_orden(self) -> float:

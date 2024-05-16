@@ -1,6 +1,7 @@
 from .forms import ComentarioForm, PatronForm
 
-def make_comment(form:ComentarioForm, id):
+
+def make_comment(form: ComentarioForm, id):
     """Retorna si funciona la operación con la db
 
     Args:
@@ -28,4 +29,3 @@ def make_patron(form: PatronForm):
         form.save()
         return True
     return False
-

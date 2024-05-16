@@ -4,17 +4,17 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+
 class PatronForm(ModelForm):
     class Meta:
         model = PatronModel
         fields = [
             "nombre",
             "detalles",
-        
             "alto",
             "imagen",
             "precio",
-            "descuento",   
+            "descuento",
         ]
         """
         labels = {
@@ -78,35 +78,40 @@ class ComentarioForm(ModelForm):
     class Meta:
         model = ComentarioModel
         fields = "__all__"
-        exclude =('publicacion',)
+        exclude = ("publicacion",)
+
     def clean_calificación(self):
         cali_n = "calificación"
         if cali_n in self.cleaned_data:
             calificacion: int = self.cleaned_data[cali_n]
-        if not (calificacion and 1 <= calificacion <= 5 and int(calificacion) == calificacion):
+        if not (
+            calificacion
+            and 1 <= calificacion <= 5
+            and int(calificacion) == calificacion
+        ):
             raise forms.ValidationError(
                 "El valor debería ser un `int` positivo :(", "invalid"
             )
         else:
             return calificacion
+
     def save(self, id, commit=True):
         instance = super().save(commit=False)
-        instance.publicacion = PatronModel.objects.get(pk=id)  
+        instance.publicacion = PatronModel.objects.get(pk=id)
         if commit:
             instance.save()
         return instance
-    
+
+
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = ('username','password1','password2')
+        fields = ("username", "password1", "password2")
 
     def __init__(self, *args, **kargs):
         super(RegisterForm, self).__init__(*args, **kargs)
-        for fieldname in ['username','password1','password2']:
+        for fieldname in ["username", "password1", "password2"]:
             self.fields[fieldname].help_text = None
-            self.fields[fieldname].widget.attrs.update({'class':"form-control"})
-            
-       
+            self.fields[fieldname].widget.attrs.update({"class": "form-control"})
