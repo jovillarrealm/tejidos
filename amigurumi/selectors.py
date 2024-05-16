@@ -9,6 +9,8 @@ from .interface import Reporte
 # Exclusively for ReporteXlsx
 import xlsxwriter
 from datetime import date 
+import requests
+from django.http import JsonResponse
 # For ReporteArrow
 import pyarrow as pa
 
@@ -124,8 +126,8 @@ class ReporteArrow(Reporte):
         data_types = [
             pa.string(),  # 'Company Name'
             pa.string(),  # 'Industry'
-            pa.float64(),  # 'Sales'
-            pa.float64(),  # 'Profit'
+            pa.float32(),  # 'Sales'
+            pa.float32(),  # 'Profit'
         ]
 
         # Create PyArrow arrays from data
@@ -152,3 +154,11 @@ class ReporteArrow(Reporte):
             result.append(p)
         response = self.build_file(result)
         return FileResponse(response, content_type='binary/octet-stream', filename="catalogo.arrow")
+
+def consume_api(url= "http://countrybox.online:8000/product/countrybox-api/"):
+    response = requests.get(url)
+    data = response.json()
+    print(data)
+    return data
+
+
