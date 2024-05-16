@@ -19,7 +19,7 @@ services:
       - "80:80"
       - "443:443" # Map container port 443 to host port 443 (HTTPS)
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf # Mount custom Nginx config
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro # Mount custom Nginx config
       - certbot-etc:/etc/letsencrypt # Mount volume for persistent certs
       - certbot-var:/var/lib/letsencrypt # Mount volume for persistent certs
     deploy:

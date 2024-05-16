@@ -6,16 +6,16 @@ from .forms import ComentarioForm, DescuentoForm
 from .models import ComentarioModel, PatronModel
 from .services import make_comment
 from .interface import Reporte
+
 # Exclusively for ReporteXlsx
 import xlsxwriter
-from datetime import date 
+from datetime import date
 import requests
-from django.http import JsonResponse
+
 # For ReporteArrow
 import pyarrow as pa
 
 import pyarrow.feather as feather
-
 
 
 def update_item_descuento(item: PatronModel, form: Form):
@@ -91,20 +91,30 @@ class ReporteXlsx(Reporte):
     def __init__(self, **kwargs):
         pass
 
-    def build_excel(self,data, path):
+    def build_excel(self, data, path):
         buffer = io.BytesIO()
         wb = xlsxwriter.Workbook(buffer)
         ws = wb.add_worksheet()
-        bold = wb.add_format({'bold': True})
-        row_i, col_i = 0,0
-        ws.write_row(row_i,col_i,["Nombre", "Tamaño", "Precio", "Precio en descuento", date.today().strftime("%d/%m/%Y") ], bold)
+        bold = wb.add_format({"bold": True})
+        row_i, col_i = 0, 0
+        ws.write_row(
+            row_i,
+            col_i,
+            [
+                "Nombre",
+                "Tamaño",
+                "Precio",
+                "Precio en descuento",
+                date.today().strftime("%d/%m/%Y"),
+            ],
+            bold,
+        )
         for row in data:
-            row_i +=1
-            ws.write_row(row_i,col_i, row)
+            row_i += 1
+            ws.write_row(row_i, col_i, row)
         wb.close()
         buffer.seek(0)
         return buffer
-
 
     def reportar(self, data, path="static/amigurumi/amigurumi.xlsx"):
         result = []
@@ -112,9 +122,7 @@ class ReporteXlsx(Reporte):
             p = (p.nombre, p.tamaño, p.precio, p.precio_descuento)
             result.append(p)
         buffer = self.build_excel(result, path)
-        return FileResponse(buffer,as_attachment=True, filename="catalogo.xlsx")
-
-
+        return FileResponse(buffer, as_attachment=True, filename="catalogo.xlsx")
 
 
 class ReporteArrow(Reporte):
@@ -137,12 +145,19 @@ class ReporteArrow(Reporte):
             arrays.append(pa.array(column_data, type=data_types[i]))
 
         # Build schema from field names and types
-        schema = pa.schema([("Nombre", arrays[0].type), ("Tamaño", arrays[1].type), ("Precio", arrays[2].type), ("Precio en descuento", arrays[3].type)])
+        schema = pa.schema(
+            [
+                ("Nombre", arrays[0].type),
+                ("Tamaño", arrays[1].type),
+                ("Precio", arrays[2].type),
+                ("Precio en descuento", arrays[3].type),
+            ]
+        )
 
         # Create a PyArrow table from arrays and schema
         table: pa.Table = pa.Table.from_arrays(arrays, schema=schema)
         buffer = io.BytesIO()
-        feather.write_feather(table,buffer)
+        feather.write_feather(table, buffer)
         buffer.seek(0)
         return buffer
         # Create a Django response object, and specify content_type as pdf
@@ -153,12 +168,13 @@ class ReporteArrow(Reporte):
             p = (p.nombre, p.tamaño, p.precio, p.precio_descuento)
             result.append(p)
         response = self.build_file(result)
-        return FileResponse(response, content_type='binary/octet-stream', filename="catalogo.arrow")
+        return FileResponse(
+            response, content_type="binary/octet-stream", filename="catalogo.arrow"
+        )
 
-def consume_api(url= "http://countrybox.online:8000/product/countrybox-api/"):
+
+def consume_api(url="http://countrybox.online:8000/product/countrybox-api/"):
     response = requests.get(url)
     data = response.json()
     print(data)
     return data
-
-

@@ -169,8 +169,10 @@ class ReporteView(View):
         catalogoData = get_catalogoData()
         return reporte.reportar(catalogoData)
 
+
 class AliadosIframeView(TemplateView):
     template_name = "patron/aliadosiframe.html"
+
 
 class AliadosView(View):
     template_name = "patron/aliadosmain.html"
