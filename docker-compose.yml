@@ -28,6 +28,10 @@ services:
       replicas: 1 # One Nginx container needed
 
 volumes:
-  # Optional: Volumes for persistent certs (replace with your own storage solution)
-  certbot-etc: {}
-  certbot-var: {}
+  certbot-etc:
+    # Replace with the actual host path where certificates are stored (if different)
+    hostPath: /etc/letsencrypt
+  certbot-var:
+    # Replace with the actual host path where certificates are stored (if different)
+    hostPath: /var/lib/letsencrypt
+
