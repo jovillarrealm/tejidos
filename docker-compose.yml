@@ -27,6 +27,4 @@ services:
 
 volumes:
   certbot-etc:
-    external: true
   certbot-var:
-    external: true
