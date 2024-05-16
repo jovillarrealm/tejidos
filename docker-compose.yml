@@ -1,43 +1,32 @@
-version: "3.9"
+version: "3.8"
 
 services:
-  # Django service
-  tejidoservice:
+  # Django application service
+  tejidos:
+    image: jovillarrealm/dockerized-tejidos:latest
     build:
-      context: .
-      dockerfile: ./tejidos/Dockerfile
-    ports:
-      - "8000:8000"
+      context: .  # Build the image from the current directory
     environment:
-      - LETSENCRYPT_HOST=jorgeavm.top
-      - LETSENCRYPT_EMAIL=javillarrm@eafit.edu.co
-    volumes:
-      - ./nginx-conf:/etc/nginx/conf.d:ro
-      - certbot-etc:/etc/letsencrypt
-    depends_on:
-      - certbot
-    restart: unless-stopped
+      - ALLOWED_HOSTS=jorgeavm.top
+      # Add other Django environment variables here (optional)
+    deploy:
+      replicas: 3  # Scale to 3 replicas for redundancy
 
-  # Nginx reverse proxy service
-  nginx-proxy:
-    image: nginx:bookworm
-    volumes:
-      - ./nginx-conf:/etc/nginx/conf.d:ro
-      - certbot-etc:/etc/letsencrypt
+  # Reverse proxy service with HTTPS
+  nginx:
+    image: nginx:stable-alpine
     ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - tejidoservice
-    restart: unless-stopped
-
-  # Certbot service
-  certbot:
-    image: certbot/certbot
+      - "443:443"  # Map container port 443 to host port 443 (HTTPS)
     volumes:
-      - certbot-etc:/etc/letsencrypt
-      - ./nginx-conf:/etc/nginx/conf.d:ro
-    command: ["certonly", "--webserver", "nginx", "-d", "jorgeavm.top", "--agree-tos", "-m", "javillarrm@eafit.edu.co"]
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro  # Mount custom Nginx config
+      - certbot-etc:/etc/letsencrypt  # Optional: Mount volume for persistent certs
+      - certbot-var:/var/lib/letsencrypt  # Optional: Mount volume for persistent certs
+    depends_on:
+      - tejidos
+    deploy:
+      replicas: 1  # One Nginx container needed
 
 volumes:
-  certbot-etc:
+  # Optional: Volumes for persistent certs (replace with your own storage solution)
+  certbot-etc: {}
+  certbot-var: {}

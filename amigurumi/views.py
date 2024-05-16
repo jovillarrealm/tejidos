@@ -168,3 +168,19 @@ class ReporteView(View):
                 return redirect("catalogo")
         catalogoData = get_catalogoData()
         return reporte.reportar(catalogoData)
+
+class AliadosIframeView(TemplateView):
+    template_name = "patron/aliadosiframe.html"
+
+class AliadosView(View):
+    template_name = "patron/aliadosmain.html"
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        catalogoData = ()
+        catalogo_rows = split_chunks(catalogoData)
+        viewData = {}
+        viewData["catalogo_rows"] = catalogo_rows
+        viewData["title"] = "Catálogo de Amigurumis"
+        viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
+
+        return render(request, self.template_name, viewData)

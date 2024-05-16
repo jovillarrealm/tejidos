@@ -21,6 +21,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'amigurumi/logo.png' %}" alt="Your Amigurumi Shop Logo" style="width: 150px; height: 150px;">
+            </a>
             <a class="navbar-brand" href="{% url 'home' %}"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,6 +47,10 @@
                             <li><a class="dropdown-item" href="{% url 'cpatron' %}">Crear patrón</a></li>
                             <li><a class="dropdown-item" href="{% url 'reporte' 'arrow' %}">Catálogo como .arrow</a></li>
                             <li><a class="dropdown-item" href="{% url 'reporte' 'excel' %}">Catálogo como Excel</a></li>
+                            <li><a class="dropdown-item" href="{% url 'reporte' 'excel' %}">Catálogo de Aliados</a></li>
+                            <li><a class="dropdown-item" href="{% url 'api' %}">Vista Browser de API</a></li>
+                            <li><a class="dropdown-item" href="{% url 'aliadosiframe' %}">Vista Browser de API Aliada</a></li>
+                            <li><a class="dropdown-item" href="{% url 'aliados' %}">Vista Catálogo Aliados</a></li>
 
                         </ul>
                     </li>
