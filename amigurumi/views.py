@@ -19,6 +19,7 @@ from amigurumi.selectors import (
     get_top_comentarios,
     get_catalogoData,
     split_chunks,
+    consume_api,
     ReporteXlsx,
     ReporteArrow,
 )
@@ -162,9 +163,27 @@ class ReporteView(View):
         match format:
             case "excel":
                 reporte: Reporte = ReporteXlsx()
-            case "pdf":
+            case "arrow":
                 reporte: Reporte = ReporteArrow()
             case _:
                 return redirect("catalogo")
         catalogoData = get_catalogoData()
         return reporte.reportar(catalogoData)
+
+
+class AliadosIframeView(TemplateView):
+    template_name = "patron/aliadosiframe.html"
+
+
+class AliadosView(View):
+    template_name = "patron/aliadosmain.html"
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        catalogoData = consume_api()
+        catalogo_rows = split_chunks(catalogoData)
+        viewData = {}
+        viewData["catalogo_rows"] = catalogo_rows
+        viewData["title"] = "Catálogo de Amigurumis"
+        viewData["subtitle"] = "Aquí se verán los diseños prefabricados por empleados"
+
+        return render(request, self.template_name, viewData)

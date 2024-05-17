@@ -1,0 +1,44 @@
+{% extends '../base.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block header_title %} {{subtitle}} {% endblock %}
+
+
+{% block content %}
+<h2 class="mb-3">Catálogo API Aliada</h2>
+
+
+{% for row in catalogo_rows %}
+<div class="row">
+    {% for product in row %}
+
+    <div class="col mb-5">
+        <div class="card h-100">
+
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+
+                    <!-- Product name-->
+                    <h5 class="fw-bolder"><a href="{{ product.url }}"
+                            style="color: black;text-decoration: none;">{{ product.name }}</a></h5>
+                    <!-- Product price-->
+                    COP {{ product.price }}
+                    {{ product.description }}
+                    
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ product.url }}">Go to Item</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+    
+</div>
+{% endfor %}
+{% endblock %}
