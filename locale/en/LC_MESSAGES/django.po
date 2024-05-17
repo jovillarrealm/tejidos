@@ -1,0 +1,296 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-16 20:31-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\amigurumi\templates\base.html:10
+msgid "Tejidos.com - Tienda Amigurumis"
+msgstr "Tejidos.com - Amigurumis shop"
+
+#: .\amigurumi\templates\base.html:32
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:33
+msgid "About"
+msgstr "About"
+
+#: .\amigurumi\templates\base.html:35
+msgid "Iniciar Sesión"
+msgstr "Log in"
+
+#: .\amigurumi\templates\base.html:38
+#: .\amigurumi\templates\users\register.html:9
+#: .\amigurumi\templates\users\register.html:25
+msgid "Registrarse"
+msgstr "Sign up"
+
+#: .\amigurumi\templates\base.html:42
+msgid "Cerrar Sesión"
+msgstr "Log out"
+
+#: .\amigurumi\templates\base.html:46
+msgid "Catálogo"
+msgstr "Catalogue"
+
+#: .\amigurumi\templates\base.html:49
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:38
+msgid "Todos los productos"
+msgstr "Show products"
+
+#: .\amigurumi\templates\base.html:53
+msgid "Crear patrón"
+msgstr "Make pattern"
+
+#: .\amigurumi\templates\base.html:56
+msgid "Nuevos productos"
+msgstr "New arrivals"
+
+#: .\amigurumi\templates\base.html:64
+msgid "Idioma"
+msgstr "Language"
+
+#: .\amigurumi\templates\base.html:84
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:50
+msgid "Carrito"
+msgstr "Cart"
+
+#: .\amigurumi\templates\home.html:6
+msgid "Página de inicio - Tienda En Linea"
+msgstr "Home page - Online shop"
+
+#: .\amigurumi\templates\home.html:9
+msgid "Top Patrones Mejor Calificados"
+msgstr "Top patterns"
+
+#: .\amigurumi\templates\home.html:14
+msgid "Calificación Promedio:"
+msgstr "Average rating:"
+
+#: .\amigurumi\templates\home.html:15
+msgid "Autor:"
+msgstr "Author"
+
+#: .\amigurumi\templates\home.html:16
+msgid "Comentario:"
+msgstr "Comment:"
+
+#: .\amigurumi\templates\home.html:23
+msgid "No hay patrones mejor calificados disponibles."
+msgstr "There are no rated patterns"
+
+#: .\amigurumi\templates\patron\catalogo.html:26
+msgid "Descuento"
+msgstr "Discount"
+
+#: .\amigurumi\templates\patron\catalogo.html:55
+#: .\amigurumi\templates\patron\catalogo.html:116
+#: .\amigurumi\templates\patron\catalogo.html:140
+#: .\amigurumi\templates\patron\catalogo.html:168
+#: .\amigurumi\templates\patron\show.html:37
+#: .\amigurumi\templates\products\index.html:88
+#: .\amigurumi\templates\products\index.html:112
+#: .\amigurumi\templates\products\index.html:140
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:79
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:139
+msgid "Añadir al carrito"
+msgstr "Add to cart"
+
+#: .\amigurumi\templates\patron\catalogo.html:67
+#: .\amigurumi\templates\products\index.html:39
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:90
+msgid "Productos relacionados"
+msgstr "Related products"
+
+#: .\amigurumi\templates\patron\catalogo.html:77
+#: .\amigurumi\templates\products\index.html:49
+msgid "Producto Elegante"
+msgstr "Fancy product"
+
+#: .\amigurumi\templates\patron\catalogo.html:84
+#: .\amigurumi\templates\products\index.html:56
+msgid "Ver opciones"
+msgstr "Options"
+
+#: .\amigurumi\templates\patron\catalogo.html:92
+#: .\amigurumi\templates\products\index.html:64
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:115
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:147
+msgid "Venta"
+msgstr "Sale"
+
+#: .\amigurumi\templates\patron\catalogo.html:100
+#: .\amigurumi\templates\products\index.html:72
+msgid "Objeto especial"
+msgstr "Special item"
+
+#: .\amigurumi\templates\patron\catalogo.html:124
+#: .\amigurumi\templates\products\index.html:96
+msgid "venta"
+msgstr "Sale"
+
+#: .\amigurumi\templates\patron\catalogo.html:132
+#: .\amigurumi\templates\products\index.html:104
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:155
+msgid "Artículo en venta"
+msgstr "For sale"
+
+#: .\amigurumi\templates\patron\catalogo.html:153
+#: .\amigurumi\templates\products\index.html:125
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:176
+msgid "Artículo popular"
+msgstr "Popular item"
+
+#: .\amigurumi\templates\patron\confirm.html:27
+msgid "Exito!"
+msgstr "Success!"
+
+#: .\amigurumi\templates\patron\confirm.html:31
+msgid "Producto creado o modificado exitosamente"
+msgstr "Succesfully created or modified product"
+
+#: .\amigurumi\templates\patron\crear.html:4
+#: .\amigurumi\templates\patron\crear.html:16
+msgid "Crear Patrón"
+msgstr "Make pattern"
+
+#: .\amigurumi\templates\patron\crear.html:37
+msgid "Nombre:"
+msgstr "Name:"
+
+#: .\amigurumi\templates\patron\crear.html:42
+msgid "Detalles:"
+msgstr "Details:"
+
+#: .\amigurumi\templates\patron\crear.html:47
+msgid "Alto(cm):"
+msgstr "High(cm):"
+
+#: .\amigurumi\templates\patron\crear.html:52
+msgid "Tamaño:"
+msgstr "Size:"
+
+#: .\amigurumi\templates\patron\crear.html:54
+msgid "Grande"
+msgstr "Big"
+
+#: .\amigurumi\templates\patron\crear.html:55
+msgid "Mediano"
+msgstr "Medium"
+
+#: .\amigurumi\templates\patron\crear.html:56
+msgid "Pequeño"
+msgstr "Small"
+
+#: .\amigurumi\templates\patron\crear.html:61
+msgid "Imagen:"
+msgstr "Image:"
+
+#: .\amigurumi\templates\patron\crear.html:64
+msgid "Elegir archivo"
+msgstr "Choose file"
+
+#: .\amigurumi\templates\patron\crear.html:69
+msgid "Precio COP"
+msgstr "Price COP"
+
+#: .\amigurumi\templates\patron\crear.html:74
+#, python-format
+msgid "Descuento de precio (%%)"
+msgstr "Discount (%)"
+
+#: .\amigurumi\templates\patron\crear.html:78
+msgid "Enviar"
+msgstr "Send"
+
+#: .\amigurumi\templates\patron\mostrar.html:26
+msgid "Nombre: "
+msgstr "Name"
+
+#: .\amigurumi\templates\patron\mostrar.html:27
+msgid "Producto: "
+msgstr "Product"
+
+#: .\amigurumi\templates\patron\mostrar.html:28
+msgid "Dimensiones: "
+msgstr "Proportions"
+
+#: .\amigurumi\templates\patron\show.html:50
+#, python-format
+msgid "Aplicar descuento (%%)"
+msgstr "Apply Discount (%)"
+
+#: .\amigurumi\templates\patron\show.html:59
+msgid "Comentar"
+msgstr "Comment"
+
+#: .\amigurumi\templates\patron\show.html:67
+msgid "Eliminar patrón"
+msgstr "Delete pattern"
+
+#: .\amigurumi\templates\patron\show.html:78
+msgid "Comentarios"
+msgstr "Comments"
+
+#: .\amigurumi\templates\patron\show.html:99
+msgid "Estrellas"
+msgstr "Stars"
+
+#: .\amigurumi\templates\products\create.html:16
+msgid "Crear producto"
+msgstr "Create product"
+
+#: .\amigurumi\templates\users\login.html:6
+#: .\amigurumi\templates\users\login.html:24
+msgid "Iniciar sesión"
+msgstr "Log in"
+
+#: .\amigurumi\templates\users\login.html:17
+msgid "Usuario"
+msgstr "User"
+
+#: .\amigurumi\templates\users\login.html:21
+msgid "Contraseña"
+msgstr "Password"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:32
+msgid "Pagina principal"
+msgstr "Home page"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:36
+msgid "Comprar"
+msgstr "Buy"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:42
+msgid "Artículos populares"
+msgstr "Popular items"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:43
+msgid "Recien llegados"
+msgstr "New arrivals"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:65
+msgid "Patron Amigurumi"
+msgstr "Amigurumi pattern"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:100
+msgid "Producto elegante"
+msgstr "Fancy product"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:107
+msgid "ver opciones"
+msgstr "Options"
+
+#: .\startbootstrap-shop-item-gh-pages\showpatron.html:123
+msgid "Artículo especial"
+msgstr "Special item"

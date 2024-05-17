@@ -1,4 +1,5 @@
-{% extends '../base.html' %}
+{% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %} {{title}} {% endblock %}
 
@@ -23,12 +24,11 @@
       <div class="card-body">
 
         <h5 class="card-title">
-          Exito!
-
+          {% trans "Exito!" %}
 
         </h5>
 
-        <p class="card-text">Producto creado o modificado exitosamente</p>
+        <p class="card-text">{% trans "Producto creado o modificado exitosamente" %}</p>
 
       </div>
 

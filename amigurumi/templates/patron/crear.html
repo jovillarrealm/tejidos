@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %} Crear Patrón {% endblock %}
+{% block title %} {% trans "Crear Patrón" %} {% endblock %}
 
 {% block content %}
 
@@ -12,7 +13,7 @@
 
       <div class="card">
 
-        <div class="card-header">Crear Patrón</div>
+        <div class="card-header">{% trans "Crear Patrón" %}</div>
 
           <div class="card-body">
 
@@ -33,48 +34,48 @@
               {% csrf_token %}
 
               <div class="form-group">
-                <label for="id_nombre">Nombre:</label>
+                <label for="id_nombre">{% trans "Nombre:" %}</label>
                 <input type="text" class="form-control" id="id_nombre" placeholder="Ingresar nombre" name="nombre" value="{{form.data.nombre }}">
               </div>
 
               <div class="form-group">
-                  <label for="id_detalles">Detalles:</label>
+                  <label for="id_detalles">{% trans "Detalles:" %}</label>
                   <textarea class="form-control" id="id_detalles" placeholder="Especificar detalles del patrón" name="detalles" rows="5" columns="30">{{form.data.detalles }}</textarea>
               </div>
 
               <div class="form-group">
-                  <label for="id_alto">Alto (cm):</label>
+                  <label for="id_alto">{% trans "Alto(cm):" %}</label>
                   <input type="number" step="1" min="1" class="form-control" id="id_alto" placeholder="Ingresar alto (cm)" name="alto" value="{{form.data.alto }}">
               </div>
 
               <div class="form-group">
-                  <label for="id_tamaño">Tamaño:</label>
+                  <label for="id_tamaño">{% trans "Tamaño:" %}</label>
                   <select class="form-control" id="id_tamaño" name="tamaño">
-                      <option value="GR">Grande</option>
-                      <option value="MD">Mediano</option>
-                      <option value="PQ">Pequeño</option>
+                      <option value="GR">{% trans "Grande" %}</option>
+                      <option value="MD">{% trans "Mediano" %}</option>
+                      <option value="PQ">{% trans "Pequeño" %}</option>
                   </select>
               </div>
 
               <div class="form-group">
-                <label for="id_imagen">Imagen:</label>
+                <label for="id_imagen">{% trans "Imagen:" %}</label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="id_imagen" name="imagen">
-                    <label class="custom-file-label" for="id_imagen">Choose file</label>
+                    <label class="custom-file-label" for="id_imagen">{% trans "Elegir archivo" %}</label>
                 </div>
               </div>
 
               <div class="form-group">
-                  <label for="id_precio">Precio (COP):</label>
+                  <label for="id_precio">{% trans "Precio COP" %}</label>
                   <input type="number" step="1" min="1" class="form-control" id="id_precio" placeholder="Ingresar precio (COP)" name="precio" value="{{form.data.precio}}">
               </div>
 
               <div class="form-group">
-                  <label for="id_descuento">Descuento de precio (%):</label>
+                  <label for="id_descuento">{% trans "Descuento de precio (%)" %}</label>
                   <input type="number" step="1" min="1" class="form-control" id="id_descuento" placeholder="Ingresar descuento de precio (%)" name="descuento" value="{{form.data.descuento}}">
               </div>
 
-              <button type="submit" class="btn btn-primary">Enviar</button>
+              <button type="submit" class="btn btn-primary">{% trans "Enviar" %}</button>
 
             </form>
 

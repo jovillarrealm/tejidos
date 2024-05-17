@@ -1,4 +1,5 @@
-{% extends '../base.html' %}
+{% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %} {{title}} {% endblock %}
 
@@ -22,9 +23,9 @@
 
       <div class="card-body">
         <ol>
-          <li>Nombre: {{product.nombre}}</li>
-          <li>Precio: COP{{product.precio}}</li>
-          <li>Dimensiones: {{product.tamaño}}*  {{product.alto}}*</li>
+          <li>{% trans "Nombre: " %} {{product.nombre}}</li>
+          <li>{% trans "Producto: " %} COP{{product.precio}}</li>
+          <li>{% trans "Dimensiones: " %} {{product.tamaño}}*  {{product.alto}}*</li>
         </ol>
         
           

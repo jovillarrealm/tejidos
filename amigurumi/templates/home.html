@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
-<h2 class="mb-3">Home Page - Online Store</h2>
+<h2 class="mb-3">{% trans "Página de inicio - Tienda En Linea" %}</h2>
 {% if top_comentarios %}
 <div>
-    <h1>Top Comentarios Mejor Calificados</h1>
+    <h1>{% trans "Top Patrones Mejor Calificados" %}</h1>
     <ul>
         {% for comentario in top_comentarios %}
         <li>
             <h2>{{ comentario.publicacion.nombre }}</h2>
-            <p>Calificación Promedio: {{ comentario.calificacion }}</p>
-            <p>Autor: {{ comentario.autor }}</p>
-            <p>Comentario: {{ comentario.comentario }}</p>
+            <p>{% trans "Calificación Promedio:" %} {{ comentario.calificacion }}</p>
+            <p>{% trans "Autor:" %} {{ comentario.autor }}</p>
+            <p>{% trans "Comentario:" %} {{ comentario.comentario }}</p>
             <!-- Puedes agregar más detalles aquí si lo deseas -->
         </li>
         {% endfor %}
     </ul>
 </div>
 {% else %}
-<p>No hay patrones mejor calificados disponibles.</p>
+<p>{% trans "No hay patrones mejor calificados disponibles." %}</p>
 {% endif %}
 
 {% endblock %}

@@ -22,8 +22,8 @@ from .models import PatronModel,ComentarioModel, UserProfile
 # Create your views here.
 
 
-class HomeView(TemplateView):
-    template_name = "home.html"
+def home(request):
+    return render(request, "home.html")
 
 
 class CreatePatronView(LoginRequiredMixin,View):

@@ -1,4 +1,5 @@
-{% extends '../base.html' %}
+{% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %} {{title}} {% endblock %}
 
@@ -33,7 +34,7 @@
                         style="max-width: 3rem" />
                     <button class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
-                        Añadir al carrito
+                        {% trans "Añadir al carrito" %}
                     </button>
 
                 </div>
@@ -46,7 +47,7 @@
             name="descuento" value='{{DescuentoForm.descuento}}' />
         <button class="btn btn-outline-dark flex-shrink-0" type="submit">
             <i class="bi-star-fill"></i>
-            Aplicar descuento (%)
+            {% trans "Aplicar descuento (%)" %}
         </button>
     </form>
     <form method="POST" action="{% url 'mostrar' id=patron.id %}">
@@ -55,7 +56,7 @@
 
         <button class="btn btn-outline-dark flex-shrink-0" type="submit">
             <i class="bi-star-fill"></i>
-            Comentar
+            {% trans "Comentar" %}
         </button>
     </form>
 
@@ -63,7 +64,7 @@
         {% csrf_token %}
         <button class="btn btn-outline-dark flex-shrink-0" name="delete" type="submit">
             <i class="bi bi-trash"></i>
-            Eliminar Patrón
+            {% trans "Eliminar patrón" %}
         </button>
     </form>
 </section>
@@ -74,7 +75,7 @@
 </section>
 <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">Comentarios</h2>
+        <h2 class="fw-bolder mb-4">{% trans "Comentarios" %}</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for comentario in comentarios %}
             <div class="col mb-5">
@@ -95,7 +96,7 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">{{comentario.calificacion}} estrellas</a>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">{{comentario.calificacion}} {% trans "Estrellas" %}</a>
                         </div>
                     </div>
                 </div>
