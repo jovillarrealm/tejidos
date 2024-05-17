@@ -173,7 +173,7 @@ class ReporteArrow(Reporte):
         )
 
 
-def consume_api(url="http://countrybox.online:8000/product/countrybox-api/"):
+def consume_api(url="http://35.222.82.16:8000/product/countrybox-api/"):
     response = requests.get(url)
     data = response.json()
     
