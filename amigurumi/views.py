@@ -19,6 +19,7 @@ from amigurumi.selectors import (
     get_top_comentarios,
     get_catalogoData,
     split_chunks,
+    consume_api,
     ReporteXlsx,
     ReporteArrow,
 )
@@ -178,7 +179,7 @@ class AliadosView(View):
     template_name = "patron/aliadosmain.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        catalogoData = ()
+        catalogoData = consume_api()
         catalogo_rows = split_chunks(catalogoData)
         viewData = {}
         viewData["catalogo_rows"] = catalogo_rows
