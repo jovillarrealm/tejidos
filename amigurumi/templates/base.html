@@ -46,34 +46,18 @@
                     </li>
                     {% endif %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'catalogo' %}">Catálogo</a></li>
-                    <li class="nav-item dropdown">
-<<<<<<< HEAD
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Catálogo" %}</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="{% url 'catalogo' %}">{% trans "Todos los productos" %}</a>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                                <a class="dropdown-item" href="{% url 'cpatron' %}">{% trans "Crear patrón" %}</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#!">{% trans "Nuevos productos" %}</a>
-                            </li>
-=======
+                        <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">Otros</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{% url 'catalogo' %}">Todos los productos</a></li>
+                            <li><a class="dropdown-item" href="{% url 'catalogo' %}">{% trans "Todos los productos" %}</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'cpatron' %}">Crear patrón</a></li>
-                            <li><a class="dropdown-item" href="{% url 'reporte' 'arrow' %}">Catálogo como .arrow</a></li>
-                            <li><a class="dropdown-item" href="{% url 'reporte' 'excel' %}">Catálogo como Excel</a></li>
-                            <li><a class="dropdown-item" href="{% url 'reporte' 'excel' %}">Catálogo de Aliados</a></li>
-                            <li><a class="dropdown-item" href="{% url 'api' %}">Vista Browser de API</a></li>
-                            <li><a class="dropdown-item" href="{% url 'aliadosiframe' %}">Vista Browser de API Aliada</a></li>
-                            <li><a class="dropdown-item" href="{% url 'aliados' %}">Vista Catálogo Aliados</a></li>
-
->>>>>>> 65b424c967a8a43caba1fd4db9d01a9fa49c3821
+                            <li><a class="dropdown-item" href="{% url 'cpatron' %}">{% trans "Crear patrón" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'reporte' 'arrow' %}">{% trans "Catálogo como .arrow" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'reporte' 'excel' %}">{% trans "Catálogo como Excel" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'reporte' 'excel' %}">{% trans "Catálogo de Aliados" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'api' %}">{% trans "Vista Browser de API" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'aliadosiframe' %}">{% trans "Vista Browser de API Aliada" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'aliados' %}">{% trans "Vista Catálogo Aliados" %}</a></li>
                         </ul>
                     </li>
                 </ul>

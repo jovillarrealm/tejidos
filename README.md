@@ -11,6 +11,3 @@ Jorge Alfredo Villarreal Márquez
 ### Estilos de
 
 <https://startbootstrap.com/template/shop-item>
-
-
-
