@@ -44,7 +44,7 @@ class ComentarioModel(Model):
     publicacion = models.ForeignKey(
         PatronModel, on_delete=models.CASCADE, related_name="comentarios"
     )
-    autor = models.CharField(max_length=30, unique=True)
+    autor = models.CharField(max_length=30)
     calificacion = models.IntegerField(null=True, blank=True)
     comentario = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -59,7 +59,7 @@ class UserProfile(models.Model):
 class CotizacionModel(Model):
     patrones_cotizados = models.ManyToManyField(PatronModel)
     @property
-    def total_orden(self) -> float:
+    def total_order(self) -> float:
         precio = 0
         for patron in self.patrones_cotizados.all():
             precio += patron.precio_descuento
@@ -67,7 +67,7 @@ class CotizacionModel(Model):
 
 class OrderModel(Model):
     patrones = models.ManyToManyField(PatronModel)
-    cotizaciones = models.ManyToManyField(CotizacionModel)
+    cotizaciones = models.ManyToManyField(CotizacionModel, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

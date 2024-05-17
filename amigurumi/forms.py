@@ -3,7 +3,6 @@ from .models import PatronModel, ComentarioModel
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
 
 class PatronForm(ModelForm):
     class Meta:
@@ -11,6 +10,7 @@ class PatronForm(ModelForm):
         fields = [
             "nombre",
             "detalles",
+        
             "alto",
             "imagen",
             "precio",
@@ -47,12 +47,14 @@ class PatronForm(ModelForm):
         descuento_n = "descuento"
         if descuento_n in self.cleaned_data:
             descuento: int = self.cleaned_data[descuento_n]
-        if not (descuento and 0 <= descuento <= 100 and int(descuento) == descuento):
-            raise forms.ValidationError(
-                "El valor debería ser un `int` positivo :(", "invalid"
-            )
-        else:
-            return descuento
+
+            if not (0 <= descuento <= 100 and int(descuento) == descuento):
+                raise forms.ValidationError(
+                    "El valor debería ser un `int` positivo :(", "invalid"
+                )
+            else:
+                return descuento
+        return 0
 
 
 class DescuentoForm(Form):
@@ -62,22 +64,20 @@ class DescuentoForm(Form):
         descuento_n = "descuento"
         if descuento_n in self.cleaned_data:
             descuento: int = self.cleaned_data[descuento_n]
-        if not (descuento and 0 <= descuento <= 100 and int(descuento) == descuento):
-            raise forms.ValidationError(
-                "El valor debería ser un `int` positivo :(", "invalid"
-            )
-        else:
-            return descuento
+
+            if not (0 <= descuento <= 100 and int(descuento) == descuento):
+                raise forms.ValidationError(
+                    "El valor debería ser un `int` positivo :(", "invalid"
+                )
+            else:
+                return descuento
+        return 0
 
 
 class ComentarioForm(ModelForm):
     class Meta:
         model = ComentarioModel
-        fields = [
-            "autor",
-            "calificacion",
-            "comentario",
-        ]
+        fields = "__all__"
         exclude =('publicacion',)
     def clean_calificación(self):
         cali_n = "calificación"

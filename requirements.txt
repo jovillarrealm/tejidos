@@ -1,5 +1,12 @@
-asgiref==3.7.2
-Django==5.0.3
-pillow==10.2.0
-sqlparse==0.4.4
-tzdata==2024.1
+asgiref==3.8.1 ; python_full_version == "3.11.2"
+django==5.0.6 ; python_full_version == "3.11.2"
+factory-boy==3.3.0 ; python_full_version == "3.11.2"
+faker==25.0.1 ; python_full_version == "3.11.2"
+numpy==1.26.4 ; python_full_version == "3.11.2"
+pillow==10.3.0 ; python_full_version == "3.11.2"
+pyarrow==16.0.0 ; python_full_version == "3.11.2"
+python-dateutil==2.9.0.post0 ; python_full_version == "3.11.2"
+six==1.16.0 ; python_full_version == "3.11.2"
+sqlparse==0.5.0 ; python_full_version == "3.11.2"
+tzdata==2024.1 ; sys_platform == "win32" and python_full_version == "3.11.2"
+xlsxwriter==3.2.0 ; python_full_version == "3.11.2"

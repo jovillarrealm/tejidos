@@ -9,10 +9,8 @@ def make_comment(form:ComentarioForm, id):
     Returns:
         bool: Retorna si funciona
     """
-    print("antes de comment made")
     if form.is_valid():
         form.save(id=id)
-        print("Comment made")
         return True
     return False
 

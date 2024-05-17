@@ -30,9 +30,9 @@
                 </div>
                 <p class="lead">{{patron.detalles}}</p>
                 <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
+                    <input class="form-control text-center me-3" name="unidades" type="num" value="1"
                         style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         {% trans "Añadir al carrito" %}
                     </button>
@@ -41,6 +41,7 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <form method="POST" action="{% url 'mostrar' id=patron.id %}">
         {% csrf_token %}
         <input type="number" step=1 min="1" max="100" class="form-control text-center me-3" style="max-width: 6rem"
@@ -50,6 +51,22 @@
             {% trans "Aplicar descuento (%)" %}
         </button>
     </form>
+=======
+
+    {% if user.is_authenticated %}
+    <div>
+        <form method="POST" action="{% url 'mostrar' id=patron.id %}">
+            {% csrf_token %}
+            <input type="number" step=1 min="0" max="100" class="form-control text-center me-3" style="max-width: 6rem"
+                name="descuento" value='{{DescuentoForm.descuento}}' />
+            <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                <i class="bi-star-fill"></i>
+                Aplicar descuento (%)
+            </button>
+        </form>
+    </div>
+    {% endif %}
+>>>>>>> 65b424c967a8a43caba1fd4db9d01a9fa49c3821
     <form method="POST" action="{% url 'mostrar' id=patron.id %}">
         {% csrf_token %}
         {{ ComentarioForm }}
@@ -59,6 +76,7 @@
             {% trans "Comentar" %}
         </button>
     </form>
+<<<<<<< HEAD
 
     <form method="POST" action="{% url 'mostrar' id=patron.id %}">
         {% csrf_token %}
@@ -67,6 +85,19 @@
             {% trans "Eliminar patrón" %}
         </button>
     </form>
+=======
+    {% if user.is_authenticated %}
+    <div>
+        <form method="POST" action="{% url 'mostrar' id=patron.id %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-dark flex-shrink-0" name="delete" type="submit">
+                <i class="bi bi-trash"></i>
+                Eliminar Patrón
+            </button>
+        </form>
+    </div>
+    {% endif %}
+>>>>>>> 65b424c967a8a43caba1fd4db9d01a9fa49c3821
 </section>
 
 <!-- Product section-->
@@ -85,7 +116,7 @@
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
-                            
+
                             <!-- Product name-->
                             <h5 class="fw-bolder">{{comentario.autor}}</h5>
 
@@ -96,7 +127,12 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+<<<<<<< HEAD
                         <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">{{comentario.calificacion}} {% trans "Estrellas" %}</a>
+=======
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                href="#">{{comentario.calificacion}} estrellas</a>
+>>>>>>> 65b424c967a8a43caba1fd4db9d01a9fa49c3821
                         </div>
                     </div>
                 </div>
